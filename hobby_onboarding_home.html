@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>취미 온보딩 홈</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #5b6ee1;
+      --primary-dark: #3f50bf;
+      --soft: #eef1ff;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --shadow: 0 18px 40px rgba(31, 41, 55, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      background: radial-gradient(circle at top left, #eef1ff 0, transparent 38%),
+                  linear-gradient(180deg, #f8f9ff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 36px 0 60px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 12px 28px rgba(91, 110, 225, 0.32);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .ghost-btn, .primary-btn, .small-btn, .danger-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .ghost-btn {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 10px 22px rgba(91, 110, 225, 0.28);
+    }
+
+    .danger-btn {
+      background: #fff1f2;
+      color: #be123c;
+      border: 1px solid #ffe4e6;
+    }
+
+    .small-btn {
+      padding: 9px 12px;
+      background: var(--soft);
+      color: var(--primary-dark);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .profile-card, .weekly-card, .card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(229,231,235,0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .profile-card {
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(91, 110, 225, 0.10);
+      right: -70px;
+      top: -70px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .profile-card h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.12;
+      letter-spacing: -0.04em;
+    }
+
+    .profile-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      max-width: 720px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      color: #374151;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .weekly-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 270px;
+    }
+
+    .weekly-card h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .big-stat {
+      margin: 24px 0 10px;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .progress-shell {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #e8eaf5;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--primary), #8b5cf6);
+      width: 0%;
+      transition: width .35s ease;
+    }
+
+    .weekly-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
+    }
+
+    .card {
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .hobby-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hobby-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+    }
+
+    .hobby-card:hover, .hobby-card.active {
+      border-color: rgba(91, 110, 225, .55);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(31, 41, 55, 0.07);
+    }
+
+    .hobby-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .hobby-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .emoji {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--soft);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .status {
+      font-size: 12px;
+      font-weight: 900;
+      padding: 6px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .status.going { background: #ecfdf5; color: #047857; }
+    .status.thinking { background: #fffbeb; color: #b45309; }
+    .status.pause { background: #f3f4f6; color: #4b5563; }
+
+    .hobby-desc {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+      margin: 13px 0;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-row .progress-shell {
+      height: 9px;
+      flex: 1;
+    }
+
+    .percent {
+      font-weight: 900;
+      color: var(--primary-dark);
+      min-width: 42px;
+      text-align: right;
+    }
+
+    .detail-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .detail-title h2 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .stage-box {
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--soft), #fff);
+      border: 1px solid rgba(91, 110, 225, .16);
+      padding: 18px;
+      margin: 18px 0;
+    }
+
+    .stage-label {
+      color: var(--primary-dark);
+      font-weight: 900;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stage-box strong {
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .step {
+      padding: 11px 7px;
+      border-radius: 14px;
+      background: #f3f4f6;
+      color: #9ca3af;
+      font-size: 12px;
+      text-align: center;
+      font-weight: 800;
+      line-height: 1.35;
+      border: 1px solid transparent;
+    }
+
+    .step.done {
+      background: #ecfdf5;
+      color: #047857;
+      border-color: #bbf7d0;
+    }
+
+    .step.now {
+      background: var(--soft);
+      color: var(--primary-dark);
+      border-color: rgba(91, 110, 225, .3);
+    }
+
+    .mission-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-top: 14px;
+    }
+
+    .mission {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .mission input {
+      width: 20px;
+      height: 20px;
+      margin-top: 1px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .mission strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .mission span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .feedback-btn {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 16px;
+      padding: 13px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .feedback-btn:hover {
+      background: var(--soft);
+      border-color: rgba(91, 110, 225, .3);
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 15px;
+      background: white;
+      min-height: 94px;
+    }
+
+    .badge.locked {
+      opacity: .45;
+      filter: grayscale(1);
+    }
+
+    .badge-icon {
+      font-size: 26px;
+      margin-bottom: 7px;
+    }
+
+    .badge strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .badge span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      background: #111827;
+      color: white;
+      padding: 14px 16px;
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.2);
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: all .22s ease;
+      z-index: 30;
+      max-width: 320px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(17,24,39,.45);
+      display: none;
+      place-items: center;
+      z-index: 40;
+      padding: 22px;
+    }
+
+    .modal {
+      width: min(520px, 100%);
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 26px 70px rgba(0,0,0,.25);
+    }
+
+    .modal h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .modal p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .modal textarea, .modal input, .modal select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 13px;
+      margin-bottom: 12px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .modal textarea:focus, .modal input:focus, .modal select:focus {
+      border-color: rgba(91, 110, 225, .55);
+      box-shadow: 0 0 0 4px rgba(91, 110, 225, .12);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .empty {
+      color: var(--muted);
+      line-height: 1.6;
+      background: #f9fafb;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .layout {
+        grid-template-columns: 1fr;
+      }
+      .timeline {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+      .profile-card, .weekly-card, .card {
+        border-radius: 18px;
+      }
+      .profile-card {
+        padding: 22px;
+      }
+      .feedback-grid, .badge-grid {
+        grid-template-columns: 1fr;
+      }
+      .timeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .top-actions {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🌱</div>
+        <div>
+          취미 온보딩 홈
+          <div style="font-size:12px; color:#6b7280; font-weight:700;">추천에서 끝나지 않고, 취미가 될 때까지</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="ghost-btn" onclick="openProfileModal()">프로필 수정</button>
+        <button class="primary-btn" onclick="openAddHobbyModal()">+ 취미 추가</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="profile-card">
+        <div class="eyebrow">✨ 나를 비유하면</div>
+        <h1 id="helloTitle">안녕하세요, 승민님.<br/>도시 속 몰입형 탐험가 타입입니다.</h1>
+        <p id="typeDescription">
+          짧은 시간 안에서도 몰입과 성취감을 중요하게 여기며, 새로운 활동을 통해 에너지를 회복하는 편입니다.
+          오늘은 거창한 결심보다, 취미가 되기 위한 작은 한 걸음만 시작해도 충분합니다.
+        </p>
+        <div class="meta-row" id="profileChips"></div>
+      </div>
+
+      <div class="weekly-card">
+        <div>
+          <div class="section-head" style="margin-bottom:0;">
+            <div>
+              <h2>이번 주 가치 있는 시간</h2>
+              <p>수동적 소비가 아니라 직접 선택한 활동으로 채운 시간입니다.</p>
+            </div>
+          </div>
+          <div class="big-stat"><span id="weeklyHours">2.5</span>h / <span id="weeklyGoal">4</span>h</div>
+          <div class="progress-shell">
+            <div class="progress-fill" id="weeklyProgress"></div>
+          </div>
+          <div class="weekly-note" id="weeklyNote">목표까지 1.5시간 남았습니다. 오늘은 10분짜리 작은 미션 하나면 충분해요.</div>
+        </div>
+        <button class="small-btn" onclick="addValueTime()">+ 30분 기록하기</button>
+      </div>
+    </section>
+
+    <main class="layout">
+      <section>
+        <div class="card">
+          <div class="section-head">
+            <div>
+              <h2>진행 중인 취미</h2>
+              <p>여러 취미를 동시에 실험해도 괜찮습니다. 안 맞으면 피드백하고 다시 조정하면 됩니다.</p>
+            </div>
+          </div>
+          <div class="hobby-list" id="hobbyList"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <div>
+              <h2>나의 배지</h2>
+              <p>배지는 포인트가 아니라 “내가 시작하고 있다”는 작은 성취감입니다.</p>
+            </div>
+          </div>
+          <div class="badge-grid" id="badgeGrid"></div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card" id="detailCard"></div>
+
+        <div class="card">
+          <div class="section-head">
+            <div>
+              <h2>피드백 & 재탐색</h2>
+              <p>취미가 안 맞아도 실패가 아닙니다. 데이터가 하나 더 쌓인 겁니다.</p>
+            </div>
+          </div>
+          <div class="feedback-grid">
+            <button class="feedback-btn" onclick="giveFeedback('좋아요')">👍 좋아요<br><span style="color:#6b7280; font-size:12px;">계속 진행할래요</span></button>
+            <button class="feedback-btn" onclick="giveFeedback('애매해요')">🤔 애매해요<br><span style="color:#6b7280; font-size:12px;">더 쉬운 단계가 필요해요</span></button>
+            <button class="feedback-btn" onclick="giveFeedback('부담돼요')">💸 부담돼요<br><span style="color:#6b7280; font-size:12px;">비용/거리/난이도 조정</span></button>
+            <button class="feedback-btn" onclick="restartHobby()">🔁 다른 취미 찾기<br><span style="color:#6b7280; font-size:12px;">기존 성향 데이터 유지</span></button>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal-backdrop" id="profileModal">
+    <div class="modal">
+      <h3>프로필 수정</h3>
+      <p>사용자 정보와 성향 타입은 홈 화면에서 “나를 기억하는 서비스”처럼 느껴지게 만드는 핵심 요소입니다.</p>
+      <input id="editName" placeholder="이름" />
+      <input id="editAge" placeholder="나이" type="number" />
+      <input id="editLocation" placeholder="거주지" />
+      <select id="editTypeName">
+        <option>도시 속 몰입형 탐험가</option>
+        <option>회복형 감성 수집가</option>
+        <option>소속형 플레이어</option>
+        <option>루틴형 성장가</option>
+        <option>조용한 집중형 제작자</option>
+      </select>
+      <textarea id="editTypeDescription" rows="4" placeholder="성향 설명"></textarea>
+      <div class="modal-actions">
+        <button class="ghost-btn" onclick="closeModal('profileModal')">닫기</button>
+        <button class="primary-btn" onclick="saveProfile()">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="addHobbyModal">
+    <div class="modal">
+      <h3>진행할 취미 추가</h3>
+      <p>추천 결과가 아니어도 괜찮습니다. 지금 실험해보고 싶은 취미를 추가해 진행률을 관리할 수 있습니다.</p>
+      <input id="newHobbyName" placeholder="취미 이름 예: 탁구" />
+      <input id="newHobbyEmoji" placeholder="이모지 예: 🏓" maxlength="3" />
+      <select id="newHobbyStage">
+        <option value="10">후보 저장</option>
+        <option value="25">온라인 맛보기</option>
+        <option value="40">시작 정보 확인</option>
+        <option value="60">오프라인 첫 시도 준비</option>
+        <option value="80">첫 체험 완료</option>
+        <option value="100">반복 계획 설정</option>
+      </select>
+      <textarea id="newHobbyReason" rows="3" placeholder="왜 이 취미를 시작하고 싶은지"></textarea>
+      <div class="modal-actions">
+        <button class="ghost-btn" onclick="closeModal('addHobbyModal')">닫기</button>
+        <button class="primary-btn" onclick="addHobby()">추가</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STAGES = [
+      { key: "후보 저장", progress: 10, mission: "이 취미가 끌리는 이유 하나 적기" },
+      { key: "온라인 맛보기", progress: 25, mission: "입문 영상이나 초보자 후기 하나 보기" },
+      { key: "시작 정보 확인", progress: 40, mission: "예상 비용, 준비물, 혼자 가능 여부 확인하기" },
+      { key: "오프라인 첫 시도 준비", progress: 60, mission: "근처 장소 하나 확인하고 이번 주 가능한 시간 고르기" },
+      { key: "첫 체험 완료", progress: 80, mission: "첫 체험 후 좋았던 점과 부담됐던 점 기록하기" },
+      { key: "반복 계획 설정", progress: 100, mission: "다음 활동 날짜를 정하고 취미 루틴으로 저장하기" }
+    ];
+
+    const BADGES = [
+      { id: "first_search", icon: "🏁", name: "첫 탐색 완료", desc: "첫 취미 후보를 저장했습니다." },
+      { id: "ready_50", icon: "🎯", name: "시작 준비 50%", desc: "정보 확인과 첫 시도 준비 단계에 도달했습니다." },
+      { id: "offline_ready", icon: "🚪", name: "문밖으로 한 걸음", desc: "오프라인 첫 시도를 준비했습니다." },
+      { id: "feedbacker", icon: "🧭", name: "나침반 조정자", desc: "피드백을 남겨 추천 방향을 조정했습니다." },
+      { id: "collector", icon: "💾", name: "취미 후보 수집가", desc: "세 개 이상의 취미를 저장했습니다." },
+      { id: "routine", icon: "🌿", name: "취미 새싹", desc: "반복 계획 설정 단계에 도달했습니다." }
+    ];
+
+    const defaultState = {
+      selectedHobbyId: 1,
+      profile: {
+        name: "승민",
+        age: 23,
+        location: "서울",
+        typeName: "도시 속 몰입형 탐험가",
+        typeDescription: "짧은 시간 안에서도 몰입과 성취감을 중요하게 여기며, 새로운 활동을 통해 에너지를 회복하는 편입니다. 오늘은 거창한 결심보다, 취미가 되기 위한 작은 한 걸음만 시작해도 충분합니다.",
+        traits: ["성취형", "활동형", "가까운 거리 선호", "낮은 진입장벽 선호"]
+      },
+      weekly: { hours: 2.5, goal: 4 },
+      earnedBadges: ["first_search", "ready_50"],
+      hobbies: [
+        {
+          id: 1,
+          name: "탁구",
+          emoji: "🏓",
+          status: "진행 중",
+          progress: 65,
+          currentStage: "오프라인 첫 시도 준비",
+          nextAction: "근처 탁구장 하나 확인하고 이번 주 가능한 시간 고르기",
+          reason: "짧은 시간 안에 몰입감과 성취감을 느끼기 쉽고, 혼자 시작해도 부담이 적습니다.",
+          missions: [
+            { text: "집 근처 탁구장 하나 확인하기", done: true, time: "3분" },
+            { text: "예상 비용 확인하기", done: true, time: "2분" },
+            { text: "이번 주 가능한 시간 하나 고르기", done: false, time: "1분" }
+          ],
+          feedback: []
+        },
+        {
+          id: 2,
+          name: "클라이밍",
+          emoji: "🧗",
+          status: "고민 중",
+          progress: 35,
+          currentStage: "온라인 맛보기",
+          nextAction: "초보자 후기 하나 보고 체험 수업 비용 확인하기",
+          reason: "성취감은 크지만 비용과 난이도 부담이 있어 온라인 맛보기 후 판단하는 단계입니다.",
+          missions: [
+            { text: "입문 영상 1개 보기", done: true, time: "5분" },
+            { text: "체험 수업 비용 확인하기", done: false, time: "3분" },
+            { text: "혼자 가도 되는지 후기 보기", done: false, time: "4분" }
+          ],
+          feedback: ["비용이 조금 부담됨"]
+        },
+        {
+          id: 3,
+          name: "드로잉",
+          emoji: "🎨",
+          status: "보류 중",
+          progress: 20,
+          currentStage: "후보 저장",
+          nextAction: "입문 영상 하나 보고 내가 원하는 결과물이 있는지 확인하기",
+          reason: "혼자 조용히 몰입할 수 있지만, 아직 흥미가 강한지 확인이 필요한 후보입니다.",
+          missions: [
+            { text: "좋아하는 그림 스타일 저장하기", done: false, time: "3분" },
+            { text: "입문 영상 1개 보기", done: false, time: "5분" },
+            { text: "준비물 비용 확인하기", done: false, time: "2분" }
+          ],
+          feedback: []
+        }
+      ]
+    };
+
+    let state = loadState();
+
+    function loadState() {
+      const saved = localStorage.getItem("hobbyOnboardingHome");
+      if (!saved) return structuredClone(defaultState);
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return structuredClone(defaultState);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem("hobbyOnboardingHome", JSON.stringify(state));
+    }
+
+    function getSelectedHobby() {
+      return state.hobbies.find(h => h.id === state.selectedHobbyId) || state.hobbies[0];
+    }
+
+    function getStageIndex(progress) {
+      let index = 0;
+      STAGES.forEach((stage, i) => {
+        if (progress >= stage.progress) index = i;
+      });
+      return index;
+    }
+
+    function render() {
+      renderProfile();
+      renderWeekly();
+      renderHobbies();
+      renderDetail();
+      renderBadges();
+      saveState();
+    }
+
+    function renderProfile() {
+      const p = state.profile;
+      document.getElementById("helloTitle").innerHTML = `안녕하세요, ${p.name}님.<br/>${p.typeName} 타입입니다.`;
+      document.getElementById("typeDescription").textContent = p.typeDescription;
+      const chips = [
+        `🎂 ${p.age}세`,
+        `📍 ${p.location}`,
+        ...p.traits.map(t => `# ${t}`)
+      ];
+      document.getElementById("profileChips").innerHTML = chips.map(c => `<span class="chip">${c}</span>`).join("");
+    }
+
+    function renderWeekly() {
+      const { hours, goal } = state.weekly;
+      document.getElementById("weeklyHours").textContent = hours.toFixed(1);
+      document.getElementById("weeklyGoal").textContent = goal;
+      const percent = Math.min(100, Math.round((hours / goal) * 100));
+      document.getElementById("weeklyProgress").style.width = percent + "%";
+      const left = Math.max(0, goal - hours).toFixed(1);
+      document.getElementById("weeklyNote").textContent =
+        left > 0 ? `목표까지 ${left}시간 남았습니다. 오늘은 10분짜리 작은 미션 하나면 충분해요.` : "이번 주 목표를 달성했습니다. 이제 취미 새싹 인정입니다.";
+    }
+
+    function renderHobbies() {
+      const list = document.getElementById("hobbyList");
+      if (state.hobbies.length === 0) {
+        list.innerHTML = `<div class="empty">아직 진행 중인 취미가 없습니다. 취미를 하나 추가해 취미화 과정을 시작해보세요.</div>`;
+        return;
+      }
+
+      list.innerHTML = state.hobbies.map(hobby => {
+        const statusClass = hobby.status === "진행 중" ? "going" : hobby.status === "고민 중" ? "thinking" : "pause";
+        const active = hobby.id === state.selectedHobbyId ? "active" : "";
+        return `
+          <article class="hobby-card ${active}" onclick="selectHobby(${hobby.id})">
+            <div class="hobby-top">
+              <div class="hobby-title">
+                <div class="emoji">${hobby.emoji}</div>
+                <div>
+                  ${hobby.name}
+                  <div style="font-size:12px; color:#6b7280; font-weight:700; margin-top:3px;">${hobby.currentStage}</div>
+                </div>
+              </div>
+              <span class="status ${statusClass}">${hobby.status}</span>
+            </div>
+            <div class="hobby-desc">${hobby.reason}</div>
+            <div class="progress-row">
+              <div class="progress-shell"><div class="progress-fill" style="width:${hobby.progress}%"></div></div>
+              <div class="percent">${hobby.progress}%</div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderDetail() {
+      const hobby = getSelectedHobby();
+      const detail = document.getElementById("detailCard");
+
+      if (!hobby) {
+        detail.innerHTML = `<div class="empty">취미를 선택하면 현재 단계와 다음 행동이 표시됩니다.</div>`;
+        return;
+      }
+
+      const stageIndex = getStageIndex(hobby.progress);
+
+      detail.innerHTML = `
+        <div class="detail-title">
+          <div class="emoji">${hobby.emoji}</div>
+          <div>
+            <h2>${hobby.name}</h2>
+            <div style="color:#6b7280; font-weight:700;">취미가 되기까지 ${hobby.progress}% 진행</div>
+          </div>
+        </div>
+
+        <div class="progress-row" style="margin:18px 0;">
+          <div class="progress-shell"><div class="progress-fill" style="width:${hobby.progress}%"></div></div>
+          <div class="percent">${hobby.progress}%</div>
+        </div>
+
+        <div class="stage-box">
+          <div class="stage-label">현재 단계</div>
+          <strong>${hobby.currentStage}</strong>
+          <p style="margin:8px 0 0; color:#6b7280; line-height:1.6;">
+            다음 행동: ${hobby.nextAction}
+          </p>
+        </div>
+
+        <div class="timeline">
+          ${STAGES.map((s, i) => {
+            const cls = i < stageIndex ? "done" : i === stageIndex ? "now" : "";
+            return `<div class="step ${cls}">${i + 1}.<br>${s.key}</div>`;
+          }).join("")}
+        </div>
+
+        <div style="margin-top:22px;">
+          <div class="section-head" style="margin-bottom:0;">
+            <div>
+              <h2 style="font-size:20px;">오늘의 작은 미션</h2>
+              <p>큰 결심 말고, 지금 단계에서 할 수 있는 행동만 보여줍니다.</p>
+            </div>
+          </div>
+
+          <div class="mission-list">
+            ${hobby.missions.map((m, i) => `
+              <label class="mission">
+                <input type="checkbox" ${m.done ? "checked" : ""} onchange="toggleMission(${hobby.id}, ${i})">
+                <div>
+                  <strong>${m.text}</strong>
+                  <span>예상 소요 시간 ${m.time} · 완료하면 진행률과 배지가 올라갈 수 있어요.</span>
+                </div>
+              </label>
+            `).join("")}
+          </div>
+
+          <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+            <button class="primary-btn" onclick="completeStage()">현재 단계 완료</button>
+            <button class="ghost-btn" onclick="lowerDifficulty()">미션 더 쉽게</button>
+            <button class="danger-btn" onclick="removeHobby()">이 취미 삭제</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderBadges() {
+      const grid = document.getElementById("badgeGrid");
+      const earned = new Set(state.earnedBadges);
+      grid.innerHTML = BADGES.map(b => `
+        <div class="badge ${earned.has(b.id) ? "" : "locked"}">
+          <div class="badge-icon">${b.icon}</div>
+          <strong>${b.name}</strong>
+          <span>${b.desc}</span>
+        </div>
+      `).join("");
+    }
+
+    function selectHobby(id) {
+      state.selectedHobbyId = id;
+      render();
+    }
+
+    function toggleMission(hobbyId, index) {
+      const hobby = state.hobbies.find(h => h.id === hobbyId);
+      if (!hobby) return;
+      hobby.missions[index].done = !hobby.missions[index].done;
+
+      if (hobby.missions[index].done) {
+        hobby.progress = Math.min(100, hobby.progress + 5);
+        updateStageByProgress(hobby);
+        checkBadges();
+        showToast("작은 미션 완료! 취미 시작 준비도가 조금 올라갔습니다.");
+      } else {
+        hobby.progress = Math.max(10, hobby.progress - 5);
+        updateStageByProgress(hobby);
+      }
+      render();
+    }
+
+    function completeStage() {
+      const hobby = getSelectedHobby();
+      if (!hobby) return;
+      const next = STAGES.find(s => s.progress > hobby.progress);
+      if (next) {
+        hobby.progress = next.progress;
+      } else {
+        hobby.progress = 100;
+      }
+      updateStageByProgress(hobby);
+      checkBadges();
+      showToast(`${hobby.name} 단계가 업데이트되었습니다. 다음 행동이 새로 정리됐어요.`);
+      render();
+    }
+
+    function updateStageByProgress(hobby) {
+      const stage = STAGES[getStageIndex(hobby.progress)];
+      hobby.currentStage = stage.key;
+      hobby.nextAction = stage.mission;
+
+      if (hobby.progress >= 80) hobby.status = "진행 중";
+      else if (hobby.progress >= 35) hobby.status = "고민 중";
+      else hobby.status = "보류 중";
+    }
+
+    function lowerDifficulty() {
+      const hobby = getSelectedHobby();
+      if (!hobby) return;
+      hobby.missions.unshift({
+        text: `${hobby.name} 관련 후기 제목만 3개 훑어보기`,
+        done: false,
+        time: "1분"
+      });
+      showToast("미션을 더 작게 쪼갰습니다. 시작은 작을수록 좋습니다.");
+      render();
+    }
+
+    function giveFeedback(text) {
+      const hobby = getSelectedHobby();
+      if (!hobby) return;
+      hobby.feedback.push(text);
+      if (!state.earnedBadges.includes("feedbacker")) state.earnedBadges.push("feedbacker");
+
+      if (text === "좋아요") {
+        hobby.status = "진행 중";
+        hobby.progress = Math.min(100, hobby.progress + 10);
+        updateStageByProgress(hobby);
+        showToast("좋아요 피드백 저장! 다음 단계로 조금 더 가까워졌습니다.");
+      } else if (text === "애매해요") {
+        hobby.missions.unshift({ text: "이 취미가 애매한 이유 하나만 고르기", done: false, time: "1분" });
+        showToast("애매함도 좋은 데이터입니다. 더 쉬운 미션을 추가했어요.");
+      } else if (text === "부담돼요") {
+        hobby.missions.unshift({ text: "부담되는 요소 선택하기: 비용 / 거리 / 난이도 / 혼자 시작", done: false, time: "1분" });
+        showToast("부담 요소를 줄이는 방향으로 다시 조정할 수 있습니다.");
+      }
+      render();
+    }
+
+    function restartHobby() {
+      const hobby = getSelectedHobby();
+      if (hobby) {
+        hobby.status = "보류 중";
+        hobby.feedback.push("다른 취미 재탐색 요청");
+      }
+      showToast("기존 성향 데이터는 유지하고, 다른 취미를 새로 추가해보세요.");
+      openAddHobbyModal();
+      render();
+    }
+
+    function removeHobby() {
+      const hobby = getSelectedHobby();
+      if (!hobby) return;
+      if (!confirm(`${hobby.name}을 삭제할까요?`)) return;
+      state.hobbies = state.hobbies.filter(h => h.id !== hobby.id);
+      state.selectedHobbyId = state.hobbies[0]?.id || null;
+      showToast("취미를 삭제했습니다. 안 맞는 취미를 내려놓는 것도 진행입니다.");
+      render();
+    }
+
+    function checkBadges() {
+      const maxProgress = Math.max(0, ...state.hobbies.map(h => h.progress));
+      if (state.hobbies.length >= 1 && !state.earnedBadges.includes("first_search")) state.earnedBadges.push("first_search");
+      if (maxProgress >= 50 && !state.earnedBadges.includes("ready_50")) state.earnedBadges.push("ready_50");
+      if (maxProgress >= 60 && !state.earnedBadges.includes("offline_ready")) state.earnedBadges.push("offline_ready");
+      if (maxProgress >= 100 && !state.earnedBadges.includes("routine")) state.earnedBadges.push("routine");
+      if (state.hobbies.length >= 3 && !state.earnedBadges.includes("collector")) state.earnedBadges.push("collector");
+    }
+
+    function addValueTime() {
+      state.weekly.hours = Math.min(24, state.weekly.hours + 0.5);
+      showToast("가치 있는 시간 30분을 기록했습니다. 작지만 꽤 큽니다.");
+      render();
+    }
+
+    function openProfileModal() {
+      const p = state.profile;
+      document.getElementById("editName").value = p.name;
+      document.getElementById("editAge").value = p.age;
+      document.getElementById("editLocation").value = p.location;
+      document.getElementById("editTypeName").value = p.typeName;
+      document.getElementById("editTypeDescription").value = p.typeDescription;
+      openModal("profileModal");
+    }
+
+    function saveProfile() {
+      state.profile.name = document.getElementById("editName").value || "사용자";
+      state.profile.age = Number(document.getElementById("editAge").value || 0);
+      state.profile.location = document.getElementById("editLocation").value || "미입력";
+      state.profile.typeName = document.getElementById("editTypeName").value;
+      state.profile.typeDescription = document.getElementById("editTypeDescription").value;
+      closeModal("profileModal");
+      showToast("프로필이 저장되었습니다.");
+      render();
+    }
+
+    function openAddHobbyModal() {
+      document.getElementById("newHobbyName").value = "";
+      document.getElementById("newHobbyEmoji").value = "";
+      document.getElementById("newHobbyReason").value = "";
+      document.getElementById("newHobbyStage").value = "10";
+      openModal("addHobbyModal");
+    }
+
+    function addHobby() {
+      const name = document.getElementById("newHobbyName").value.trim();
+      const emoji = document.getElementById("newHobbyEmoji").value.trim() || "✨";
+      const progress = Number(document.getElementById("newHobbyStage").value);
+      const reason = document.getElementById("newHobbyReason").value.trim() || "새롭게 실험해보고 싶은 취미 후보입니다.";
+
+      if (!name) {
+        showToast("취미 이름을 입력해주세요.");
+        return;
+      }
+
+      const stage = STAGES[getStageIndex(progress)];
+      const hobby = {
+        id: Date.now(),
+        name,
+        emoji,
+        status: progress >= 40 ? "고민 중" : "보류 중",
+        progress,
+        currentStage: stage.key,
+        nextAction: stage.mission,
+        reason,
+        missions: [
+          { text: stage.mission, done: false, time: "3분" },
+          { text: `${name} 예상 비용 확인하기`, done: false, time: "2분" },
+          { text: `${name}을 이번 주에 할 수 있는 시간 하나 고르기`, done: false, time: "1분" }
+        ],
+        feedback: []
+      };
+
+      state.hobbies.unshift(hobby);
+      state.selectedHobbyId = hobby.id;
+      checkBadges();
+      closeModal("addHobbyModal");
+      showToast(`${name} 취미 여정을 추가했습니다.`);
+      render();
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = "grid";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+    document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+      backdrop.addEventListener("click", e => {
+        if (e.target === backdrop) backdrop.style.display = "none";
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
