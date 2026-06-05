@@ -2,13 +2,14 @@ import ProgressBar from './ProgressBar.jsx';
 import { getTitleImage } from '../utils/titleImages.js';
 
 export default function TitleProgressCard({ profile, stats, hint, onAchievements }) {
-  const title = profile?.currentTitle || '시작 전 모험가';
+  const title = profile?.currentTitle || '홈프로텍터';
+  const nextTitle = profile?.nextTitle || '다음 칭호';
   const titleImage = getTitleImage(title);
   const currentStep = profile?.currentTitleStep || 1;
   const message = hint || (profile?.isMaxTitle
     ? '충분히 많은 가능성을 발견했어요. 이제는 새로운 기록을 쌓아볼 차례예요.'
-    : '다음 여정까지 차근차근 나아가는 중이에요.');
-  const progressLabel = profile?.isMaxTitle ? '충분히 발견했어요' : '다음 여정까지';
+    : `${nextTitle}까지 차근차근 나아가는 중이에요.`);
+  const progressLabel = profile?.isMaxTitle ? '충분히 발견했어요' : `${nextTitle}까지`;
 
   return (
     <section className="title-progress-card card">
@@ -16,7 +17,7 @@ export default function TitleProgressCard({ profile, stats, hint, onAchievements
         <img className="title-image title-image-small" src={titleImage} alt={`${title} 여정 단계 이미지`} />
         <div className="title-progress-copy">
           <span className="eyebrow">발견과 성장</span>
-          <h2>다음 여정까지</h2>
+          <h2>{profile?.isMaxTitle ? title : nextTitle}</h2>
         </div>
       </div>
       <div className="title-progress-copy">

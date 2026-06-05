@@ -9,7 +9,7 @@ export default function AchievementScreen({ profile, achievements, completedHobb
   const earnedIds = new Set((achievements || []).map((item) => item.id));
   const lockedBase = baseAchievements.filter((achievement) => !earnedIds.has(achievement.id));
   const completedHobbyList = (completedHobbies || []).map((item) => hobbyMap[item.hobbyId]).filter(Boolean);
-  const currentTitle = profile?.currentTitle || '시작 전 모험가';
+  const currentTitle = profile?.currentTitle || '홈프로텍터';
   const titleImage = getTitleImage(currentTitle);
 
   return (

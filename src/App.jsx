@@ -21,12 +21,23 @@ function makeInstance(hobbyId) {
     instanceId: `${hobbyId}_${Date.now()}`,
     hobbyId,
     completedMissionIds: [],
+    missionEvidence: {},
     milestones: [],
     halfBonusClaimed: false,
     completeBonusClaimed: false,
     status: 'active',
     createdAt: new Date().toISOString()
   };
+}
+
+function normalizeEvidenceLink(link = '') {
+  return String(link || '').trim();
+}
+
+function hasMissionEvidence(evidence = {}) {
+  const link = String(evidence?.link || '').trim();
+  const memo = String(evidence?.memo || '').trim();
+  return link.length > 0 || memo.length > 0;
 }
 
 function getMission(hobby, missionId) {
@@ -206,6 +217,15 @@ export default function App() {
       const mission = getMission(hobby, missionId);
       if (!mission) return prev;
 
+      const evidence = active.missionEvidence?.[missionId];
+      if (!hasMissionEvidence(evidence)) {
+        return prev;
+      }
+
+      if (active.completedMissionIds.includes(missionId)) {
+        return prev;
+      }
+
       const beforeProgress = getHobbyProgress(active);
       const beforeStage = beforeProgress.stageProgress[mission.stageId];
       const updatedActive = {
@@ -311,6 +331,30 @@ export default function App() {
     setScreen('start');
   };
 
+  const handleEvidenceChange = (instanceId, missionId, nextValue) => {
+    updateState((prev) => {
+      const active = prev.activeHobbies.find((item) => item.instanceId === instanceId);
+      if (!active) return prev;
+
+      const current = active.missionEvidence?.[missionId] || {};
+      const nextEvidence = {
+        ...(active.missionEvidence || {}),
+        [missionId]: {
+          link: normalizeEvidenceLink(nextValue?.link ?? current.link ?? ''),
+          memo: String(nextValue?.memo ?? current.memo ?? ''),
+          updatedAt: new Date().toISOString()
+        }
+      };
+
+      return {
+        ...prev,
+        activeHobbies: prev.activeHobbies.map((item) => item.instanceId === instanceId
+          ? { ...item, missionEvidence: nextEvidence }
+          : item)
+      };
+    });
+  };
+
   const openHobby = (instanceId) => {
     setSelectedInstanceId(instanceId);
     setScreen('hobbyDetail');
@@ -341,7 +385,13 @@ export default function App() {
     }
 
     if (screen === 'hobbyDetail') {
-      return <HobbyDetailScreen activeHobby={selectedActiveHobby} onBack={() => setScreen('home')} onCompleteMission={completeMission} onRemove={setRemoveTargetId} />;
+      return <HobbyDetailScreen
+        activeHobby={selectedActiveHobby}
+        onBack={() => setScreen('home')}
+        onCompleteMission={completeMission}
+        onRemove={setRemoveTargetId}
+        onEvidenceChange={handleEvidenceChange}
+      />;
     }
 
     if (screen === 'addHobby') {

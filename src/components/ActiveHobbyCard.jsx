@@ -7,9 +7,33 @@ export default function ActiveHobbyCard({ activeHobby, onOpen }) {
   const progress = getHobbyProgress(activeHobby);
   if (!hobby) return null;
 
+  const categoryIconMap = {
+    '악기': '🎸',
+    '음악이론/보컬': '🎤',
+    '미술/드로잉': '🎨',
+    '취업 준비 컨설팅': '💼',
+    '사진/영상': '📸',
+    '구기 스포츠': '⚽',
+    '댄스': '💃',
+    '투자/N잡': '💰',
+    '연기/마술': '🎭',
+    '피트니스': '🏋️',
+    '스포츠': '🏃',
+    '취미/생활': '🧩',
+    '요리/조리': '🍳',
+    '공예': '🪴',
+    '계절 스포츠': '🏂',
+    '패션/미용': '💄',
+    '격투 스포츠': '🥊',
+    '국악': '🎼',
+    '기타 취미/자기계발': '✨'
+  };
+
+  const icon = categoryIconMap[hobby.category] || '🗺️';
+
   return (
     <button className="active-hobby-card card" onClick={() => onOpen(activeHobby.instanceId)}>
-      <div className="quest-icon">🗺️</div>
+      <div className="quest-icon">{icon}</div>
       <div className="active-card-body">
         <div className="card-topline">
           <span className="soft-pill">{hobby.category}</span>

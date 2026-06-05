@@ -4,7 +4,7 @@ import ProgressBar from '../components/ProgressBar.jsx';
 import MissionStageCard from '../components/MissionStageCard.jsx';
 import { TreasureChestIllustration } from '../components/Illustrations.jsx';
 
-export default function HobbyDetailScreen({ activeHobby, onBack, onCompleteMission, onRemove }) {
+export default function HobbyDetailScreen({ activeHobby, onBack, onCompleteMission, onRemove, onEvidenceChange }) {
   const hobby = hobbyMap[activeHobby?.hobbyId];
   if (!hobby || !activeHobby) {
     return (
@@ -43,7 +43,9 @@ export default function HobbyDetailScreen({ activeHobby, onBack, onCompleteMissi
               stage={stage}
               status={progress.stageProgress[stage.id]}
               completedIds={completedIds}
+              evidenceMap={activeHobby.missionEvidence || {}}
               onComplete={(mission) => onCompleteMission(activeHobby.instanceId, mission.id)}
+              onEvidenceChange={(missionId, value) => onEvidenceChange?.(activeHobby.instanceId, missionId, value)}
             />
           ))}
         </div>
@@ -54,6 +56,7 @@ export default function HobbyDetailScreen({ activeHobby, onBack, onCompleteMissi
             <span className="eyebrow">오늘의 다음 미션</span>
             <h2>{progress.nextMission?.title || '모든 미션 완료!'}</h2>
             <p className="muted">{progress.nextMission?.description || '완료 모달에서 새로운 발견 기록을 확인해보세요.'}</p>
+            <p className="mission-evidence-helper">이 미션은 링크나 메모를 남기면 완료할 수 있어요.</p>
           </section>
 
           <section className="card detail-info-panel">

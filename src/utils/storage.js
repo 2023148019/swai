@@ -4,8 +4,8 @@ export const STORAGE_KEY = 'hobbyQuestData';
 
 const defaultStats = {
   totalScore: 0,
-  currentTitle: '시작 전 모험가',
-  nextTitle: '첫걸음 모험가',
+  currentTitle: '홈프로텍터',
+  nextTitle: '초보 모험가',
   titleProgressPercent: 0,
   completedHobbyCount: 0,
   achievementCount: 0
@@ -15,6 +15,7 @@ function normalizeActiveHobby(item) {
   return {
     ...item,
     completedMissionIds: item.completedMissionIds || [],
+    missionEvidence: item.missionEvidence || {},
     milestones: item.milestones || [],
     halfBonusClaimed: Boolean(item.halfBonusClaimed || item.milestones?.includes('half')),
     completeBonusClaimed: Boolean(item.completeBonusClaimed || item.milestones?.includes('complete'))

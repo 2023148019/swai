@@ -729,11 +729,24 @@ textarea { min-height: 110px; resize: vertical; margin-top: 14px; }
 .stage-header { display: flex; justify-content: space-between; gap: 12px; }
 .stage-header strong { font-size: 1.4rem; color: var(--primary-dark); }
 .mission-list { display: grid; gap: 10px; margin-top: 18px; }
-.mission-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--border); border-radius: 18px; padding: 14px; background: #fffaf4; }
-.mission-card.done { background: #f0f8f3; }
+.mission-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; border: 1px solid var(--border); border-radius: 18px; padding: 14px; background: #fffaf4; }
+.mission-card.done { background: #f0f8f3; border-color: rgba(129, 178, 154, 0.45); }
 .mission-card.disabled { filter: grayscale(0.25); }
 .mission-card p { color: var(--muted); margin-bottom: 6px; }
 .mission-card small { color: #98734e; font-weight: 850; }
+.mission-card-actions { display: flex; flex-direction: column; align-items: stretch; gap: 8px; min-width: 220px; }
+.mission-card-copy { display: grid; gap: 8px; }
+.mission-evidence { display: grid; gap: 10px; margin-top: 6px; padding: 12px; border: 1px solid var(--border); border-radius: 16px; background: rgba(255, 255, 255, 0.82); }
+.mission-evidence-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mission-evidence-field { display: grid; gap: 6px; color: var(--secondary); font-weight: 800; font-size: 0.95rem; }
+.mission-evidence-helper { color: #8b6a3d; font-size: 0.92rem; font-weight: 800; }
+.mission-link-input, .mission-memo-textarea { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: #fffaf2; color: var(--text); padding: 10px 12px; outline: none; }
+.mission-link-input:focus, .mission-memo-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.14); }
+.mission-memo-textarea { min-height: 90px; resize: vertical; }
+.mission-evidence-status { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 10px; font-size: 0.82rem; font-weight: 900; }
+.mission-evidence-status.saved { background: #edf8f1; color: #3a7a5c; }
+.mission-evidence-status.empty { background: #fff3df; color: #8a5a1d; }
+.mission-complete-button:disabled, .mission-card button:disabled { opacity: 0.55; box-shadow: none; }
 
 /* Add/Search/Achievement */
 .add-option-grid, .search-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }

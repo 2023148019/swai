@@ -1,7 +1,7 @@
 import ProgressBar from './ProgressBar.jsx';
 import MissionCard from './MissionCard.jsx';
 
-export default function MissionStageCard({ stage, status, completedIds, onComplete }) {
+export default function MissionStageCard({ stage, status, completedIds, evidenceMap = {}, onComplete, onEvidenceChange }) {
   const locked = status?.isLocked;
   return (
     <section className={`mission-stage card ${locked ? 'locked' : ''}`}>
@@ -19,9 +19,11 @@ export default function MissionStageCard({ stage, status, completedIds, onComple
           <MissionCard
             key={mission.id}
             mission={mission}
+            evidence={evidenceMap[mission.id] || {}}
             disabled={locked}
             isComplete={completedIds.includes(mission.id)}
             onComplete={onComplete}
+            onEvidenceChange={onEvidenceChange}
           />
         ))}
       </div>
