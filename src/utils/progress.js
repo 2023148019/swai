@@ -2,23 +2,23 @@ import { hobbyMap } from '../data/hobbies.js';
 import { defaultTraits, traitLabels } from '../data/questions.js';
 
 export const titleLevels = [
-  { min: 0, title: '홈프로텍터', description: '아직은 침대와 한 몸이지만, 첫 모험을 준비 중입니다.' },
-  { min: 120, title: '초보 모험가', description: '취미를 하나씩 시도하며 나만의 취향을 알아가는 단계입니다.' },
-  { min: 350, title: '열정 모험가', description: '여러 취미를 직접 경험하며 취미 지도를 넓히고 있습니다.' },
-  { min: 750, title: '고인물 모험가', description: '취미가 일상에 자연스럽게 스며들기 시작했습니다.' },
-  { min: 1400, title: '취미 마스터', description: '이쯤 되면 취미가 아니라 라이프스타일입니다.' }
+  { min: 0, title: '시작 전 모험가', description: '아직은 첫걸음을 준비하며 나에게 맞는 길을 찾는 중입니다.' },
+  { min: 120, title: '첫걸음 모험가', description: '취미를 하나씩 시도하며 내가 몰랐던 취향을 발견하는 단계입니다.' },
+  { min: 350, title: '가능성 수집가', description: '여러 퀘스트를 경험하며 나에게 맞는 가능성을 넓히고 있습니다.' },
+  { min: 750, title: '취향 지도 제작자', description: '작은 실험들이 모여 나만의 취향 지도가 선명해지고 있습니다.' },
+  { min: 1400, title: '라이프 모험가', description: '취미가 나를 발견하는 생활의 길로 자연스럽게 이어지고 있습니다.' }
 ];
 
 const TITLE_STAGE_COUNT = 5;
 const FINAL_TITLE_STAGE_RANGE = 650;
 
 export const baseAchievements = [
-  { id: 'first_step', title: '첫 발걸음', description: '첫 취미를 추가했습니다.' },
-  { id: 'half_way', title: '작심삼일 방지턱 통과', description: '첫 취미 진행도 50%를 달성했습니다.' },
-  { id: 'first_complete', title: '취미 하나 완주', description: '취미 하나를 100% 완료했습니다.' },
-  { id: 'collector_3', title: '취미 수집가', description: '취미 3개를 추가했습니다.' },
-  { id: 'again', title: '모험은 계속된다', description: '새로운 취미를 다시 추천받았습니다.' },
-  { id: 'reviewer', title: '솔직한 리뷰어', description: '제거한 취미에 피드백을 남겼습니다.' }
+  { id: 'first_step', title: '첫 단서 발견', description: '첫 퀘스트를 취향 지도에 추가했습니다.' },
+  { id: 'half_way', title: '작은 실험의 중간 지점', description: '첫 퀘스트 진행도 50%를 달성했습니다.' },
+  { id: 'first_complete', title: '하나의 길 완주', description: '퀘스트 하나를 끝까지 완료했습니다.' },
+  { id: 'collector_3', title: '가능성 수집가', description: '퀘스트 3개를 취향 지도에 추가했습니다.' },
+  { id: 'again', title: '새로운 가능성 발견', description: '내면 나침반으로 새로운 길을 다시 찾았습니다.' },
+  { id: 'reviewer', title: '솔직한 단서 기록', description: '맞지 않았던 길에 대한 피드백을 남겼습니다.' }
 ];
 
 export function clamp(value, min = 0, max = 100) {
@@ -45,7 +45,7 @@ export function getTitleInfo(totalScore = 0) {
   const current = titleLevels[currentIndex];
   const next = titleLevels[currentIndex + 1] || {
     min: current.min + FINAL_TITLE_STAGE_RANGE,
-    title: '최고 칭호'
+    title: '충분히 발견한 여정'
   };
   const isFinalTitle = currentIndex === titleLevels.length - 1;
 
@@ -65,9 +65,9 @@ export function getTitleInfo(totalScore = 0) {
     ? 100
     : ((totalScore - currentStageStart) / (nextStageScore - currentStageStart)) * 100;
   const nextGrowthLabel = isMaxTitle
-    ? '최고 칭호'
+    ? '충분히 발견한 여정'
     : isFinalTitle && currentTitleStep >= TITLE_STAGE_COUNT
-    ? '최고 칭호'
+    ? '충분히 발견한 여정'
     : currentTitleStep >= TITLE_STAGE_COUNT
     ? `${next.title} 1단계`
     : `${current.title} ${currentTitleStep + 1}단계`;
@@ -77,7 +77,7 @@ export function getTitleInfo(totalScore = 0) {
     currentDescription: current.description,
     currentTitleStep,
     currentTitleLabel: `${current.title} ${currentTitleStep}단계`,
-    nextTitle: next?.title || '최고 칭호',
+    nextTitle: next?.title || '충분히 발견한 여정',
     nextGrowthLabel,
     titleProgressPercent: clamp(Math.round(stageProgress)),
     needScore: Math.max(0, Math.ceil(nextStageScore - totalScore)),

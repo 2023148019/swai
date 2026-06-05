@@ -8,9 +8,9 @@ export default function RecommendationScreen({ recommendations, onSelect, onReta
     <main className="screen recommendation-screen">
       <section className="card result-hero">
         <div>
-          <span className="eyebrow">추천 결과</span>
-          <h1>취미 지도에서 새로운 길을 발견했어요.</h1>
-          <p>답변을 바탕으로 어울리는 취미 경로를 찾았어요. 점수는 55~95점 사이에서 상대적으로 계산됩니다.</p>
+          <span className="eyebrow">새로운 가능성 발견</span>
+          <h1>지금의 나에게 어울리는 길을 찾았어요.</h1>
+          <p>답변을 바탕으로 나를 더 잘 알아갈 수 있는 퀘스트를 골라봤어요. 마음이 가는 길 하나를 골라 작은 실험을 시작해보세요.</p>
         </div>
         <CompassIllustration />
       </section>
@@ -20,7 +20,7 @@ export default function RecommendationScreen({ recommendations, onSelect, onReta
           <div key={group.category} className="recommendation-group card flat-card">
             <div className="section-title-row">
               <div>
-                <span className="eyebrow">추천 카테고리</span>
+                <span className="eyebrow">새롭게 열린 가능성</span>
                 <h2>{group.category}</h2>
               </div>
             </div>
@@ -32,7 +32,7 @@ export default function RecommendationScreen({ recommendations, onSelect, onReta
       </section>
 
       <div className="button-row center">
-        <button className="secondary-button" onClick={onRetake}>다시 추천받기</button>
+        <button className="secondary-button" onClick={onRetake}>새로운 가능성 찾기</button>
         <button className="ghost-button" onClick={onHome}>홈으로 가기</button>
       </div>
     </main>

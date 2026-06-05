@@ -16,8 +16,8 @@ export default function ActiveHobbyCard({ activeHobby, onOpen }) {
           <strong>{progress.overall}%</strong>
         </div>
         <h3>{hobby.name}</h3>
-        <p>현재 단계: {progress.currentStage?.title || '완료 준비 중'}</p>
-        <p className="muted">다음 미션: {progress.nextMission?.title || '모든 미션 완료!'}</p>
+        <p>현재 걷고 있는 길: {progress.currentStage?.title || '완료 준비 중'}</p>
+        <p className="muted">오늘의 다음 미션: {progress.nextMission?.title || '모든 미션 완료!'}</p>
         <ProgressBar value={progress.overall} compact />
       </div>
     </button>

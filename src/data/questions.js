@@ -280,7 +280,7 @@ export const surveyQuestions = [
   {
     id: 'q9',
     title: '취미에 쓸 수 있는 시간은 어느 정도인가요?',
-    subtitle: '욕심은 취미 마스터, 현실은 과제 제출 23:59일 수 있으니까요.',
+    subtitle: '욕심은 취미 생활 완성, 현실은 과제 제출 23:59일 수 있으니까요.',
     options: [
       {
         optionId: 'short',

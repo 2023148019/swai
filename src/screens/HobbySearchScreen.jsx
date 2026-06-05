@@ -20,11 +20,11 @@ export default function HobbySearchScreen({ activeHobbies, completedHobbies, onA
 
   return (
     <main className="screen search-screen">
-      <button className="ghost-button back-button" onClick={onBack}>← 취미 추가로</button>
+      <button className="ghost-button back-button" onClick={onBack}>← 가능성 선택으로</button>
       <section className="card search-card">
         <span className="eyebrow">직접 검색</span>
-        <h1>찾고 싶은 취미를 입력해보세요.</h1>
-        <input className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="예: 탁구, 공예, 요가" autoFocus />
+        <h1>취향 지도에 추가할 길을 찾아보세요.</h1>
+        <input className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="활동 이름을 검색해보세요. 예: 탁구, 베이킹, 기타" autoFocus />
         <div className="category-filter-row" role="radiogroup" aria-label="취미 카테고리 필터">
           <button
             className={`category-filter-button${selectedCategory === 'all' ? ' selected' : ''}`}
@@ -54,17 +54,18 @@ export default function HobbySearchScreen({ activeHobbies, completedHobbies, onA
           <article className="card search-result-card" key={hobby.id}>
             <div className="card-topline">
               <span className="soft-pill">{hobby.category}</span>
-              {completedIds.has(hobby.id) && <span className="soft-pill muted-pill">완료한 취미</span>}
+              {completedIds.has(hobby.id) && <span className="soft-pill muted-pill">완료한 퀘스트</span>}
             </div>
             <h3>{hobby.name}</h3>
             <p className="muted">{hobby.description}</p>
             <div className="info-chip-row">
               <span>{hobby.estimatedCost}</span><span>{hobby.timeLevel}</span><span>{hobby.difficulty}</span>
             </div>
-            <button className="primary-button full" onClick={() => onAdd(hobby)}>추가하기</button>
+            <button className="primary-button full" onClick={() => onAdd(hobby)}>퀘스트로 추가하기</button>
           </article>
         ))}
       </div>
+      {!results.length ? <div className="empty-card card">아직 이 이름의 길은 찾지 못했어요.</div> : null}
     </main>
   );
 }

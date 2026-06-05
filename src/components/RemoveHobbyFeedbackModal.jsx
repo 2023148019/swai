@@ -20,9 +20,9 @@ export default function RemoveHobbyFeedbackModal({ hobby, onCancel, onSubmit }) 
   return (
     <div className="modal-backdrop">
       <section className="modal-card">
-        <span className="eyebrow">피드백</span>
-        <h2>이 취미가 잘 맞지 않았던 이유가 무엇인가요?</h2>
-        <p className="muted">다음 추천을 더 똑똑하게 만들게요. 알고리즘아 일해라.</p>
+        <span className="eyebrow">취향 지도 조정</span>
+        <h2>이번 길은 잘 맞지 않았나요?</h2>
+        <p className="muted">괜찮아요. 맞지 않는 길을 알게 된 것도 나를 알아가는 중요한 단서예요. 이유를 알려주시면 다음 가능성을 더 잘 찾아볼게요.</p>
         <div className="reason-grid">
           {reasons.map((item) => (
             <button key={item} className={`choice-card small ${reason === item ? 'selected' : ''}`} onClick={() => setReason(item)}>{item}</button>
@@ -30,8 +30,8 @@ export default function RemoveHobbyFeedbackModal({ hobby, onCancel, onSubmit }) 
         </div>
         <textarea value={comment} onChange={(event) => setComment(event.target.value)} placeholder="추가 의견을 자유롭게 적어주세요." />
         <div className="button-row end">
-          <button className="secondary-button" onClick={onCancel}>취소</button>
-          <button className="danger-button" onClick={() => onSubmit({ reason, comment })}>피드백 남기고 제거하기</button>
+          <button className="secondary-button" onClick={onCancel}>조금 더 해볼게요</button>
+          <button className="danger-button" onClick={() => onSubmit({ reason, comment })}>피드백 남기고 지도에서 제외하기</button>
         </div>
       </section>
     </div>

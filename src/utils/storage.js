@@ -4,8 +4,8 @@ export const STORAGE_KEY = 'hobbyQuestData';
 
 const defaultStats = {
   totalScore: 0,
-  currentTitle: '홈프로텍터',
-  nextTitle: '초보 모험가',
+  currentTitle: '시작 전 모험가',
+  nextTitle: '첫걸음 모험가',
   titleProgressPercent: 0,
   completedHobbyCount: 0,
   achievementCount: 0

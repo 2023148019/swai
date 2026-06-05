@@ -7,9 +7,9 @@ export default function MissionStageCard({ stage, status, completedIds, onComple
     <section className={`mission-stage card ${locked ? 'locked' : ''}`}>
       <div className="stage-header">
         <div>
-          <span className="eyebrow">{locked ? '잠긴 단계' : status?.isComplete ? '완료 단계' : '진행 단계'}</span>
+          <span className="eyebrow">{locked ? '다음 길 준비 중' : status?.isComplete ? '이 단서를 발견했어요' : '지금 진행 중인 길이에요'}</span>
           <h3>{stage.title}</h3>
-          <p>{locked ? '이전 단계를 완료하면 열려요.' : stage.description}</p>
+          <p>{locked ? '이전 단계를 완료하면 다음 길이 열려요.' : stage.description}</p>
         </div>
         <strong>{status?.percent || 0}%</strong>
       </div>

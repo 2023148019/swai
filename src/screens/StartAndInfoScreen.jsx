@@ -64,11 +64,11 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
     <main className="screen start-screen desktop-hero-layout">
       <section className="hero-card card">
         <div className="hero-copy">
-          <span className="eyebrow">Hobby Quest Beta</span>
-          <h1>당신의 취미 지도를 펼쳐볼 시간이에요.</h1>
+          <span className="eyebrow">아직 만나지 못한 나를 찾아서</span>
+          <h1>나도 몰랐던 나의 모습을 발견해볼까요?</h1>
           <p>
-            짧은 질문에 답하면 지금 시작하기 좋은 취미를 추천해드려요.
-            추천받은 취미는 퀘스트처럼 진행하고, 업적도 모을 수 있어요.
+            짧은 질문에 답하면 지금의 나에게 어울리는 첫 번째 퀘스트를 찾아드려요.
+            운동, 창작, 음악, 요리 같은 취미 활동을 통해 나에게 맞는 가능성을 가볍게 실험해볼 수 있어요.
           </p>
           <div className="hero-feature-grid">
             <div><strong>10문항</strong><span>가벼운 취향 분석</span></div>
@@ -129,7 +129,7 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
                 ) : null}
               </div>
             </div>
-            <button className="primary-button full" type="submit">취향 질문 시작하기</button>
+            <button className="primary-button full" type="submit">내면 나침반 맞추기</button>
             <button className="ghost-button full" type="button" onClick={() => setShowForm(false)}>시작 선택으로 돌아가기</button>
           </form>
         ) : (
@@ -137,7 +137,7 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
             <CompassIllustration />
             <span className="eyebrow">시작 선택</span>
             <h2>어떤 모험을 시작할까요?</h2>
-            <p className="muted">앱에 들어왔다고 이전 정보가 자동으로 복원되지 않습니다. 아래에서 직접 선택해주세요.</p>
+            <p className="muted">아래에서 직접 선택하면 오늘의 작은 모험을 이어갈 수 있어요.</p>
             <div className="start-action-stack">
               <button className="primary-button full" type="button" onClick={startNew}>새 모험 시작하기</button>
               {hasSavedAdventure ? (

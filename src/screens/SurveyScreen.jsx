@@ -43,12 +43,12 @@ export default function SurveyScreen({ onComplete, onBack }) {
     <main className="screen survey-screen">
       <section className="card question-card">
         <div className="card-topline">
-          <span className="eyebrow">취향 질문 {index + 1}/{activeQuestions.length}</span>
+          <span className="eyebrow">나침반 조정 {index + 1}/{activeQuestions.length}</span>
           <button className="ghost-button" onClick={goPrev}>이전</button>
         </div>
         <ProgressBar value={progress} compact />
         <h1>{question.title}</h1>
-        <p className="muted">{question.subtitle}</p>
+        <p className="muted">{question.subtitle} 정답은 없어요. 지금 끌리는 쪽이 오늘의 단서예요.</p>
         <div className="choice-grid">
           {question.options.map((option) => (
             <button key={option.optionId} className="choice-card" onClick={() => selectOption(option)}>
@@ -56,6 +56,7 @@ export default function SurveyScreen({ onComplete, onBack }) {
             </button>
           ))}
         </div>
+        <p className="muted">답변할수록 나에게 어울리는 가능성이 조금씩 선명해져요.</p>
       </section>
     </main>
   );
