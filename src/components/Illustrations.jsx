@@ -1,3 +1,6 @@
+import sproutAdventurerMaleImage from '../assets/sub-character-images/sprout-adventurer-male.png';
+import sproutAdventurerFemaleImage from '../assets/sub-character-images/sprout-adventurer-female.png';
+
 export function AdventurerIllustration() {
   return (
     <div className="illustration adventurer" aria-hidden="true">
@@ -9,6 +12,19 @@ export function AdventurerIllustration() {
         <div className="body" />
       </div>
       <div className="ground" />
+    </div>
+  );
+}
+
+export function SproutAdventurerSelection({ gender }) {
+  return (
+    <div className="illustration sprout-adventurer-selection" aria-hidden="true">
+      <div className={`sprout-adventurer-frame${gender === '남성' ? ' selected' : ''}`}>
+        <img className="sprout-adventurer-option" src={sproutAdventurerMaleImage} alt="" />
+      </div>
+      <div className={`sprout-adventurer-frame${gender === '여성' ? ' selected' : ''}`}>
+        <img className="sprout-adventurer-option" src={sproutAdventurerFemaleImage} alt="" />
+      </div>
     </div>
   );
 }

@@ -90,6 +90,7 @@ export function getProfile(userInfo, userTraits, userStats) {
   const topTraits = getTopTraits(userTraits);
   return {
     name: userInfo?.name || '모험가',
+    gender: userInfo?.gender || '',
     ...titleInfo,
     topTraits
   };

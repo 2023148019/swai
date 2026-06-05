@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AdventurerIllustration, CompassIllustration } from '../components/Illustrations.jsx';
+import { CompassIllustration, SproutAdventurerSelection } from '../components/Illustrations.jsx';
 
 const REGION_OPTIONS = [
   '서울',
@@ -41,6 +41,7 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
           : [...prev.locations, region]
       };
     });
+    setLocationOpen(false);
   };
 
   const startNew = () => {
@@ -75,7 +76,7 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
             <div><strong>5단계</strong><span>취미별 성장 미션</span></div>
           </div>
         </div>
-        <AdventurerIllustration />
+        <SproutAdventurerSelection gender={form.gender} />
       </section>
 
       <aside className={`start-side-panel${showForm ? ' form-mode' : ''}`}>
