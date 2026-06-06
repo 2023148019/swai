@@ -1,5 +1,8 @@
 import sproutAdventurerMaleImage from '../assets/sub-character-images/sprout-adventurer-male.png';
 import sproutAdventurerFemaleImage from '../assets/sub-character-images/sprout-adventurer-female.png';
+import compassImage from '../../나침반.png';
+import hobbyMapImage from '../../지도.png';
+import treasureChestImage from '../../보물상자.png';
 
 export function AdventurerIllustration() {
   return (
@@ -32,12 +35,7 @@ export function SproutAdventurerSelection({ gender }) {
 export function CompassIllustration() {
   return (
     <div className="illustration compass" aria-hidden="true">
-      <div className="compass-ring">
-        <div className="needle" />
-        <span>N</span>
-      </div>
-      <div className="spark spark-1">✦</div>
-      <div className="spark spark-2">✧</div>
+      <img className="compass-image" src={compassImage} alt="" />
     </div>
   );
 }
@@ -45,8 +43,7 @@ export function CompassIllustration() {
 export function TreasureChestIllustration() {
   return (
     <div className="treasure" aria-hidden="true">
-      <div className="treasure-lid" />
-      <div className="treasure-body">✦</div>
+      <img className="treasure-image" src={treasureChestImage} alt="" />
     </div>
   );
 }
@@ -73,11 +70,7 @@ export function LockedAchievementIllustration() {
 export function HobbyMapIllustration() {
   return (
     <div className="hobby-map" aria-hidden="true">
-      <div className="route-dot start">🏠</div>
-      <div className="route-line" />
-      <div className="route-dot middle">🧭</div>
-      <div className="route-line second" />
-      <div className="route-dot end">🏆</div>
+      <img className="hobby-map-image" src={hobbyMapImage} alt="" />
     </div>
   );
 }

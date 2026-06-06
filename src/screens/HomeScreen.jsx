@@ -1,7 +1,7 @@
 import UserProfileCard from '../components/UserProfileCard.jsx';
 import ActiveHobbyCard from '../components/ActiveHobbyCard.jsx';
 import { HobbyMapIllustration } from '../components/Illustrations.jsx';
-import hobbyMapImage from '../../취미지도.png';
+import hobbyMapImage from '../../지도.png';
 
 export default function HomeScreen({ profile, stats, userTraits, activeHobbies, onOpenHobby, onAddHobby, onAchievements }) {
   return (

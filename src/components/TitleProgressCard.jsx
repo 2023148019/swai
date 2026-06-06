@@ -8,8 +8,8 @@ export default function TitleProgressCard({ profile, stats, hint, onAchievements
   const currentStep = profile?.currentTitleStep || 1;
   const message = hint || (profile?.isMaxTitle
     ? '충분히 많은 가능성을 발견했어요. 이제는 새로운 기록을 쌓아볼 차례예요.'
-    : `${nextTitle}까지 차근차근 나아가는 중이에요.`);
-  const progressLabel = profile?.isMaxTitle ? '충분히 발견했어요' : `${nextTitle}까지`;
+    : '다음 단계까지 차근차근 나아가는 중이에요.');
+  const progressLabel = profile?.isMaxTitle ? '충분히 발견했어요' : '다음 단계까지';
 
   return (
     <section className="title-progress-card card">
@@ -17,7 +17,7 @@ export default function TitleProgressCard({ profile, stats, hint, onAchievements
         <img className="title-image title-image-small" src={titleImage} alt={`${title} 여정 단계 이미지`} />
         <div className="title-progress-copy">
           <span className="eyebrow">발견과 성장</span>
-          <h2>{profile?.isMaxTitle ? title : nextTitle}</h2>
+          <h2>{title}</h2>
         </div>
       </div>
       <div className="title-progress-copy">

@@ -931,7 +931,7 @@ const optionTrackScores = {
   practical: { cheap: 22, quick: 14, easy: 14, record: 18 }
 };
 
-function pickAdaptiveSet(answers = []) {
+function getAdaptiveTrackScores(answers = []) {
   const scores = {
     active: 0,
     creative: 0,
@@ -953,7 +953,18 @@ function pickAdaptiveSet(answers = []) {
     scores.practical += (traitEffects.costSensitive || 0) * 3 + (traitEffects.routine || 0) * 2 + (categoryEffects['투자/N잡'] || 0) * 0.4 + (categoryEffects['취업 준비 컨설팅'] || 0) * 0.4 + (categoryEffects['패션/미용'] || 0) * 0.35;
   });
 
-  return Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] || 'practical';
+  return scores;
+}
+
+function pickAdaptiveSets(answers = [], count = 2) {
+  const fallbackTracks = ['practical', 'creative', 'active', 'calm', 'expressive'];
+  const rankedTracks = Object.entries(getAdaptiveTrackScores(answers))
+    .sort((a, b) => b[1] - a[1])
+    .map(([track]) => track);
+
+  return [...rankedTracks, ...fallbackTracks]
+    .filter((track, index, list) => list.indexOf(track) === index && adaptiveQuestionSets[track])
+    .slice(0, count);
 }
 
 export function getAdaptiveSurveyQuestions(answers = []) {
@@ -961,7 +972,8 @@ export function getAdaptiveSurveyQuestions(answers = []) {
 
   const openingQuestions = surveyQuestions.slice(0, 4);
   const closingQuestions = surveyQuestions.slice(8, 10);
-  const adaptiveSet = adaptiveQuestionSets[pickAdaptiveSet(answers)] || adaptiveQuestionSets.practical;
+  const adaptiveSets = pickAdaptiveSets(answers.slice(0, 4))
+    .flatMap((track) => adaptiveQuestionSets[track].slice(0, 3));
 
-  return [...openingQuestions, ...adaptiveSet, ...closingQuestions];
+  return [...openingQuestions, ...adaptiveSets, ...closingQuestions];
 }
