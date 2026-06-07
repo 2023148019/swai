@@ -2,7 +2,7 @@ import { hobbyMap } from '../data/hobbies.js';
 import { defaultTraits, traitLabels } from '../data/questions.js';
 
 export const titleLevels = [
-  { min: 0, title: '홈프로텍터', description: '아직은 첫걸음을 준비하며 나에게 맞는 길을 찾는 중입니다.' },
+  { min: 0, title: '홈프로텍터', description: '아직은 첫걸음을 준비하며 나의 취향 지도를 펼쳐보는 중입니다.' },
   { min: 120, title: '초보 모험가', description: '취미를 하나씩 시도하며 내가 몰랐던 취향을 발견하는 단계입니다.' },
   { min: 350, title: '열정 모험가', description: '여러 퀘스트를 경험하며 나에게 맞는 가능성을 넓히고 있습니다.' },
   { min: 750, title: '취향 지도 제작자', description: '작은 실험들이 모여 나만의 취향 지도가 선명해지고 있습니다.' },
@@ -17,7 +17,7 @@ export const baseAchievements = [
   { id: 'half_way', title: '작은 실험의 중간 지점', description: '첫 퀘스트 진행도 50%를 달성했습니다.' },
   { id: 'first_complete', title: '하나의 길 완주', description: '퀘스트 하나를 끝까지 완료했습니다.' },
   { id: 'collector_3', title: '가능성 수집가', description: '퀘스트 3개를 취향 지도에 추가했습니다.' },
-  { id: 'again', title: '새로운 가능성 발견', description: '내면 나침반으로 새로운 길을 다시 찾았습니다.' },
+  { id: 'again', title: '새로운 가능성 발견', description: '내면 지도를 다시 복원해 새로운 지점을 발견했습니다.' },
   { id: 'reviewer', title: '솔직한 단서 기록', description: '맞지 않았던 길에 대한 피드백을 남겼습니다.' }
 ];
 

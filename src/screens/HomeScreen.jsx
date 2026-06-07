@@ -1,21 +1,56 @@
 import UserProfileCard from '../components/UserProfileCard.jsx';
 import ActiveHobbyCard from '../components/ActiveHobbyCard.jsx';
-import { HobbyMapIllustration } from '../components/Illustrations.jsx';
-import hobbyMapImage from '../../지도.png';
+import { HobbyMapIllustration, TreasureChestIllustration } from '../components/Illustrations.jsx';
+import { hobbyMap } from '../data/hobbies.js';
 
-export default function HomeScreen({ profile, stats, userTraits, activeHobbies, onOpenHobby, onAddHobby, onAchievements }) {
+export default function HomeScreen({ profile, stats, userTraits, activeHobbies, completedHobbies, onOpenHobby, onAddHobby, onAchievements, onCompletedQuests }) {
+  const completedList = (completedHobbies || [])
+    .map((item) => ({ record: item, hobby: hobbyMap[item.hobbyId] }))
+    .filter((item) => item.hobby)
+    .sort((a, b) => new Date(b.record.completedAt || 0) - new Date(a.record.completedAt || 0));
+  const recentCompleted = completedList.slice(0, 3);
+
   return (
     <main className="screen home-screen dashboard-layout">
       <UserProfileCard profile={profile} stats={stats} userTraits={userTraits} onAchievements={onAchievements} />
 
       <div className="dashboard-main">
-        <section className="card map-section">
+        <section className="card completed-overview-section">
           <div>
-            <span className="eyebrow">오늘의 취향 지도</span>
-            <h1>오늘의 다음 미션을 확인해볼까요?</h1>
-            <p className="muted">작은 미션을 하나씩 완료하면 내가 몰랐던 나의 모습이 조금씩 선명해져요.</p>
+            <span className="eyebrow">완료한 여정</span>
+            <h1>{completedList.length ? `${completedList.length}개의 퀘스트를 완료했어요.` : '아직 완료한 퀘스트가 없어요.'}</h1>
+            {recentCompleted.length ? (
+              <div className="completed-mini-list">
+                {recentCompleted.map(({ record, hobby }) => (
+                  <button
+                    key={record.instanceId}
+                    className="completed-mini-item"
+                    type="button"
+                    onClick={onCompletedQuests}
+                  >
+                    <span>{hobby.name}</span>
+                    <small>{hobby.category}</small>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="completed-empty-mini">
+                <span>첫 완료 기록을 기다리는 중</span>
+              </div>
+            )}
           </div>
-          <img className="today-map-image" src={hobbyMapImage} alt="취미 지도" />
+          <div className="completed-overview-panel">
+            <div className="completed-count-tile">
+              <div>
+                <strong>{completedList.length}</strong>
+                <span>완료 퀘스트</span>
+              </div>
+              <TreasureChestIllustration />
+            </div>
+            <button className="secondary-button full" type="button" onClick={onCompletedQuests}>
+              완료 내역 보기
+            </button>
+          </div>
         </section>
 
         <section className="active-section card">

@@ -1,5 +1,5 @@
 import RecommendationCard from '../components/RecommendationCard.jsx';
-import { CompassIllustration } from '../components/Illustrations.jsx';
+import { HobbyMapIllustration } from '../components/Illustrations.jsx';
 
 export default function RecommendationScreen({ recommendations, onSelect, onRetake, onHome }) {
   const groups = recommendations?.groups || [];
@@ -8,11 +8,11 @@ export default function RecommendationScreen({ recommendations, onSelect, onReta
     <main className="screen recommendation-screen">
       <section className="card result-hero">
         <div>
-          <span className="eyebrow">새로운 가능성 발견</span>
-          <h1>지금의 나에게 어울리는 길을 찾았어요.</h1>
-          <p>답변을 바탕으로 나를 더 잘 알아갈 수 있는 퀘스트를 골라봤어요. 마음이 가는 길 하나를 골라 작은 실험을 시작해보세요.</p>
+          <span className="eyebrow">지도 복원 완료</span>
+          <h1>지도를 복원했어요. 어디부터 가볼래요?</h1>
+          <p>답변을 바탕으로 지금의 나에게 열려 있는 지점들을 표시했어요. 마음이 가는 곳 하나를 골라 작은 탐험을 시작해보세요.</p>
         </div>
-        <CompassIllustration />
+        <HobbyMapIllustration />
       </section>
 
       <section className="recommendation-board">
@@ -20,7 +20,7 @@ export default function RecommendationScreen({ recommendations, onSelect, onReta
           <div key={group.category} className="recommendation-group card flat-card">
             <div className="section-title-row">
               <div>
-                <span className="eyebrow">새롭게 열린 가능성</span>
+                <span className="eyebrow">지도에 표시된 지점</span>
                 <h2>{group.category}</h2>
               </div>
             </div>
@@ -32,7 +32,7 @@ export default function RecommendationScreen({ recommendations, onSelect, onReta
       </section>
 
       <div className="button-row center">
-        <button className="secondary-button" onClick={onRetake}>새로운 가능성 찾기</button>
+        <button className="secondary-button" onClick={onRetake}>지도 다시 복원하기</button>
         <button className="ghost-button" onClick={onHome}>홈으로 가기</button>
       </div>
     </main>

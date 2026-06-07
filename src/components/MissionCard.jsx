@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { generateMissionLink } from '../utils/aiLink.js';
+
 const missionHelperText = {
   learn: '본 자료나 영상 링크를 저장하거나, 알게 된 점을 메모해보세요.',
   research: '찾아본 장소, 가격, 클래스 링크나 비교 내용을 기록해보세요.',
@@ -9,13 +12,46 @@ const missionHelperText = {
   complete: '이 퀘스트를 마무리하며 최종 생각을 기록해보세요.'
 };
 
-export default function MissionCard({ mission, evidence = {}, isComplete, disabled, onComplete, onEvidenceChange }) {
+export default function MissionCard({ mission, hobby, userInfo, evidence = {}, isComplete, disabled, onComplete, onEvidenceChange }) {
   const link = String(evidence.link || '');
   const memo = String(evidence.memo || '');
   const hasEvidence = link.trim().length > 0 || memo.trim().length > 0;
+  const [aiLink, setAiLink] = useState(null);
+  const [aiStatus, setAiStatus] = useState('idle');
+  const [aiError, setAiError] = useState('');
 
   const updateEvidence = (field, value) => {
     onEvidenceChange?.(mission.id, { [field]: value });
+  };
+
+  const handleGenerateLink = async () => {
+    if (!hobby || disabled) return;
+
+    setAiStatus('loading');
+    setAiError('');
+    setAiLink(null);
+
+    try {
+      const result = await generateMissionLink({
+        hobbyName: hobby.name,
+        missionTitle: mission.title,
+        missionDescription: mission.description,
+        missionType: mission.type,
+        userLocation: userInfo?.location || '',
+        budget: hobby.estimatedCost || hobby.costLevel || '',
+        energy: hobby.timeLevel || ''
+      });
+
+      if (!result.success || !result.link?.url) {
+        throw new Error(result.message || 'AI link failed');
+      }
+
+      setAiLink(result.link);
+      setAiStatus('success');
+    } catch (error) {
+      setAiError(error.message || 'AI 길잡이가 바로 사용할 수 있는 링크를 찾지 못했어요. 다시 한 번 시도해 주세요.');
+      setAiStatus('error');
+    }
   };
 
   return (
@@ -44,6 +80,35 @@ export default function MissionCard({ mission, evidence = {}, isComplete, disabl
               disabled={disabled}
             />
           </label>
+          <div className="ai-link-assist">
+            <button
+              className="secondary-button ai-link-button"
+              type="button"
+              onClick={handleGenerateLink}
+              disabled={disabled || aiStatus === 'loading'}
+            >
+              {aiStatus === 'loading' ? 'AI 링크 찾는 중...' : 'AI 링크 생성'}
+            </button>
+            {aiStatus === 'loading' ? (
+              <p className="mission-evidence-helper">AI 길잡이가 실제 링크를 찾는 중입니다...</p>
+            ) : null}
+            {aiError ? <p className="ai-link-error">{aiError}</p> : null}
+            {aiLink ? (
+              <div className="ai-link-card">
+                <div>
+                  <span className="soft-pill">{aiLink.platform || 'web'}</span>
+                  <h5>{aiLink.title}</h5>
+                  <p>{aiLink.reason}</p>
+                </div>
+                <div className="button-row">
+                  <a className="secondary-button ai-link-anchor" href={aiLink.url} target="_blank" rel="noreferrer">링크 열기</a>
+                  <button className="primary-button" type="button" onClick={() => updateEvidence('link', aiLink.url)}>
+                    이 링크 저장하기
+                  </button>
+                </div>
+              </div>
+            ) : null}
+          </div>
           <label className="mission-evidence-field">
             <span>메모</span>
             <textarea

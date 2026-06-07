@@ -8,7 +8,10 @@ import { getTitleImage } from '../utils/titleImages.js';
 export default function AchievementScreen({ profile, achievements, completedHobbies, onBack }) {
   const earnedIds = new Set((achievements || []).map((item) => item.id));
   const lockedBase = baseAchievements.filter((achievement) => !earnedIds.has(achievement.id));
-  const completedHobbyList = (completedHobbies || []).map((item) => hobbyMap[item.hobbyId]).filter(Boolean);
+  const completedRecords = (completedHobbies || [])
+    .map((record) => ({ record, hobby: hobbyMap[record.hobbyId] }))
+    .filter((item) => item.hobby)
+    .sort((a, b) => new Date(b.record.completedAt || 0) - new Date(a.record.completedAt || 0));
   const currentTitle = profile?.currentTitle || '홈프로텍터';
   const titleImage = getTitleImage(currentTitle);
 
@@ -30,13 +33,13 @@ export default function AchievementScreen({ profile, achievements, completedHobb
 
       <section className="card achievement-summary">
         <div className="mini-stat-grid wide">
-          <div><strong>{completedHobbyList.length}</strong><span>완료한 퀘스트</span></div>
+          <div><strong>{completedRecords.length}</strong><span>완료한 퀘스트</span></div>
           <div><strong>{achievements.length}</strong><span>발견 기록</span></div>
         </div>
         <h2>완료한 퀘스트</h2>
-        {completedHobbyList.length ? (
+        {completedRecords.length ? (
           <div className="completed-list">
-            {completedHobbyList.map((hobby) => <span key={hobby.id} className="soft-pill">{hobby.name}</span>)}
+            {completedRecords.map(({ record, hobby }) => <span key={record.instanceId} className="soft-pill">{hobby.name}</span>)}
           </div>
         ) : <p className="muted">아직 완료한 퀘스트가 없어요. 작은 미션부터 시작해보세요.</p>}
       </section>

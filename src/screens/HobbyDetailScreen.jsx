@@ -4,7 +4,7 @@ import ProgressBar from '../components/ProgressBar.jsx';
 import MissionStageCard from '../components/MissionStageCard.jsx';
 import { TreasureChestIllustration } from '../components/Illustrations.jsx';
 
-export default function HobbyDetailScreen({ activeHobby, onBack, onCompleteMission, onRemove, onEvidenceChange }) {
+export default function HobbyDetailScreen({ activeHobby, userInfo, onBack, onCompleteMission, onRemove, onEvidenceChange }) {
   const hobby = hobbyMap[activeHobby?.hobbyId];
   if (!hobby || !activeHobby) {
     return (
@@ -42,6 +42,8 @@ export default function HobbyDetailScreen({ activeHobby, onBack, onCompleteMissi
               key={stage.id}
               stage={stage}
               status={progress.stageProgress[stage.id]}
+              hobby={hobby}
+              userInfo={userInfo}
               completedIds={completedIds}
               evidenceMap={activeHobby.missionEvidence || {}}
               onComplete={(mission) => onCompleteMission(activeHobby.instanceId, mission.id)}

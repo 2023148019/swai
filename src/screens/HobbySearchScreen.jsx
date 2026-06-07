@@ -23,7 +23,7 @@ export default function HobbySearchScreen({ activeHobbies, completedHobbies, onA
       <button className="ghost-button back-button" onClick={onBack}>← 가능성 선택으로</button>
       <section className="card search-card">
         <span className="eyebrow">직접 검색</span>
-        <h1>취향 지도에 추가할 길을 찾아보세요.</h1>
+        <h1>취향 지도에 추가할 지점을 찾아보세요.</h1>
         <input className="search-input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="활동 이름을 검색해보세요. 예: 탁구, 베이킹, 기타" autoFocus />
         <div className="category-filter-row" role="radiogroup" aria-label="취미 카테고리 필터">
           <button

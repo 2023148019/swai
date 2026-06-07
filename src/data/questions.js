@@ -245,7 +245,7 @@ export const surveyQuestions = [
   {
     id: 'q8',
     title: '관심 있는 분위기에 가까운 것은?',
-    subtitle: '이제 카테고리를 꽤 좁혀봅니다. 추천 나침반 열일 중.',
+    subtitle: '이제 지도 위의 흐릿한 구역을 꽤 좁혀봅니다.',
     options: [
       {
         optionId: 'art',
@@ -308,7 +308,7 @@ export const surveyQuestions = [
   {
     id: 'q10',
     title: '마지막으로, 지금 가장 끌리는 한 문장은?',
-    subtitle: '나침반 최종 보정입니다. 삐빅, 취미 후보 탐색 중.',
+    subtitle: '마지막 지도 조각을 맞추는 중입니다. 곧 가볼 만한 지점이 드러나요.',
     options: [
       {
         optionId: 'move',

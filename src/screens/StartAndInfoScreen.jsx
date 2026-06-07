@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CompassIllustration, SproutAdventurerSelection } from '../components/Illustrations.jsx';
+import { HobbyMapIllustration, SproutAdventurerSelection } from '../components/Illustrations.jsx';
 
 const REGION_OPTIONS = [
   '서울',
@@ -65,14 +65,14 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
       <section className="hero-card card">
         <div className="hero-copy">
           <span className="eyebrow">아직 만나지 못한 나를 찾아서</span>
-          <h1>나도 몰랐던 나의 모습을 발견해볼까요?</h1>
+          <h1>나를 찾아보세요!</h1>
           <p>
             짧은 질문에 답하면 지금의 나에게 어울리는 첫 번째 퀘스트를 찾아드려요.
             운동, 창작, 음악, 요리 같은 취미 활동을 통해 나에게 맞는 가능성을 가볍게 실험해볼 수 있어요.
           </p>
           <div className="hero-feature-grid">
-            <div><strong>10문항</strong><span>가벼운 취향 분석</span></div>
-            <div><strong>4개</strong><span>맞춤 취미 추천</span></div>
+            <div><strong>12문항</strong><span>가벼운 취향 분석</span></div>
+            <div><strong>136개</strong><span>맞춤 취미 추천</span></div>
             <div><strong>5단계</strong><span>취미별 성장 미션</span></div>
           </div>
         </div>
@@ -94,7 +94,6 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
                   <option value="">선택 안 함</option>
                   <option value="남성">남성</option>
                   <option value="여성">여성</option>
-                  <option value="기타">기타</option>
                 </select>
               </label>
               <label>
@@ -129,12 +128,12 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
                 ) : null}
               </div>
             </div>
-            <button className="primary-button full" type="submit">내면 나침반 맞추기</button>
+            <button className="primary-button full" type="submit">내면 지도 복원하기</button>
             <button className="ghost-button full" type="button" onClick={() => setShowForm(false)}>시작 선택으로 돌아가기</button>
           </form>
         ) : (
           <section className="card start-choice-card">
-            <CompassIllustration />
+            <HobbyMapIllustration />
             <span className="eyebrow">시작 선택</span>
             <h2>어떤 모험을 시작할까요?</h2>
             <p className="muted">아래에서 직접 선택하면 오늘의 작은 모험을 이어갈 수 있어요.</p>

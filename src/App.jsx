@@ -7,6 +7,7 @@ import HobbyDetailScreen from './screens/HobbyDetailScreen.jsx';
 import AddHobbyScreen from './screens/AddHobbyScreen.jsx';
 import HobbySearchScreen from './screens/HobbySearchScreen.jsx';
 import AchievementScreen from './screens/AchievementScreen.jsx';
+import CompletedQuestScreen from './screens/CompletedQuestScreen.jsx';
 import CompletionModal from './components/CompletionModal.jsx';
 import RemoveHobbyFeedbackModal from './components/RemoveHobbyFeedbackModal.jsx';
 import ResetButton from './components/ResetButton.jsx';
@@ -387,6 +388,7 @@ export default function App() {
     if (screen === 'hobbyDetail') {
       return <HobbyDetailScreen
         activeHobby={selectedActiveHobby}
+        userInfo={appState.userInfo}
         onBack={() => setScreen('home')}
         onCompleteMission={completeMission}
         onRemove={setRemoveTargetId}
@@ -406,15 +408,21 @@ export default function App() {
       return <AchievementScreen profile={profile} achievements={appState.achievements} completedHobbies={appState.completedHobbies} onBack={() => setScreen('home')} />;
     }
 
+    if (screen === 'completedQuests') {
+      return <CompletedQuestScreen completedHobbies={appState.completedHobbies} onBack={() => setScreen('home')} />;
+    }
+
     return (
       <HomeScreen
         profile={profile}
         stats={stats}
         userTraits={appState.userTraits}
         activeHobbies={appState.activeHobbies}
+        completedHobbies={appState.completedHobbies}
         onOpenHobby={openHobby}
         onAddHobby={() => setScreen('addHobby')}
         onAchievements={() => setScreen('achievement')}
+        onCompletedQuests={() => setScreen('completedQuests')}
       />
     );
   };
@@ -423,7 +431,7 @@ export default function App() {
     <div className="app-shell">
       <header className="app-header">
         <button className="brand" onClick={goHomeOrStart}>
-          <span>🧭</span> Hobby Quest
+          <span>IA</span> Inner Adventure
         </button>
         <ResetButton onReset={resetAll} />
       </header>

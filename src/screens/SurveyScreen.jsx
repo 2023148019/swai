@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAdaptiveSurveyQuestions } from '../data/questions.js';
 import ProgressBar from '../components/ProgressBar.jsx';
 import hobbyMapImage from '../../지도.png';
@@ -8,22 +8,23 @@ const SURVEY_MAP_PIECES = 12;
 export default function SurveyScreen({ onComplete, onBack }) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [restoringOptionId, setRestoringOptionId] = useState(null);
+  const [recentRestoredPieceIndex, setRecentRestoredPieceIndex] = useState(null);
+  const [answeredQuestionId, setAnsweredQuestionId] = useState(null);
   const activeQuestions = getAdaptiveSurveyQuestions(answers);
   const question = activeQuestions[index];
   const answeredCount = answers.length;
-  const isRestoringCurrentPiece = restoringOptionId !== null;
-  const restoredPieceCount = Math.min(
-    SURVEY_MAP_PIECES,
-    answeredCount + (isRestoringCurrentPiece ? 1 : 0)
-  );
+  const restoredPieceCount = Math.min(SURVEY_MAP_PIECES, answeredCount);
   const progress = Math.round((restoredPieceCount / SURVEY_MAP_PIECES) * 100);
   const isMapCompleted = restoredPieceCount >= SURVEY_MAP_PIECES;
   const isReadyForResult = answeredCount >= SURVEY_MAP_PIECES;
 
+  useEffect(() => {
+    setAnsweredQuestionId(null);
+  }, [question?.id]);
+
   const selectOption = (option) => {
-    if (isRestoringCurrentPiece || isReadyForResult) return;
-    setRestoringOptionId(option.optionId);
+    if (isReadyForResult || answeredQuestionId === question.id) return;
+    setAnsweredQuestionId(question.id);
 
     const nextAnswers = [
       ...answers,
@@ -37,21 +38,18 @@ export default function SurveyScreen({ onComplete, onBack }) {
       }
     ];
     const nextQuestions = getAdaptiveSurveyQuestions(nextAnswers);
+    const nextIndex = index + 1;
 
-    window.setTimeout(() => {
-      if (index + 1 >= nextQuestions.length) {
-        setAnswers(nextAnswers);
-        setRestoringOptionId(null);
-        return;
-      }
-      setAnswers(nextAnswers);
-      setIndex(index + 1);
-      setRestoringOptionId(null);
-    }, 420);
+    setRecentRestoredPieceIndex(Math.min(SURVEY_MAP_PIECES - 1, answers.length));
+    setAnswers(nextAnswers);
+    if (nextIndex < nextQuestions.length && nextAnswers.length < SURVEY_MAP_PIECES) {
+      setIndex(nextIndex);
+    }
+    window.setTimeout(() => setRecentRestoredPieceIndex(null), 360);
   };
 
   const goPrev = () => {
-    if (isRestoringCurrentPiece) return;
+    setAnsweredQuestionId(null);
     if (index === 0) {
       onBack?.();
       return;
@@ -69,7 +67,7 @@ export default function SurveyScreen({ onComplete, onBack }) {
     <main className="screen survey-screen">
       <section className="card question-card">
         <div className="card-topline">
-          <span className="eyebrow">나침반 조정 {Math.min(index + 1, SURVEY_MAP_PIECES)}/{SURVEY_MAP_PIECES}</span>
+          <span className="eyebrow">지도 복원 {Math.min(answeredCount + 1, SURVEY_MAP_PIECES)}/{SURVEY_MAP_PIECES}</span>
           <button className="ghost-button" onClick={goPrev}>이전</button>
         </div>
         <ProgressBar value={progress} compact />
@@ -79,9 +77,9 @@ export default function SurveyScreen({ onComplete, onBack }) {
           {question.options.map((option) => (
             <button
               key={option.optionId}
-              className={`choice-card ${restoringOptionId === option.optionId ? 'selected' : ''}`}
+              className="choice-card"
               onClick={() => selectOption(option)}
-              disabled={isRestoringCurrentPiece || isReadyForResult}
+              disabled={isReadyForResult}
             >
               {option.label}
             </button>
@@ -89,10 +87,8 @@ export default function SurveyScreen({ onComplete, onBack }) {
         </div>
         <p className="muted">
           {isReadyForResult
-            ? '내면 지도가 완성됐어요. 완성된 지도를 확인해볼 시간이에요.'
-            : isRestoringCurrentPiece
-            ? '좋아요. 새로운 지도 조각이 선명해졌어요.'
-            : '답변할수록 나에게 어울리는 가능성이 조금씩 선명해져요.'}
+            ? '지도를 모두 복원했어요. 이제 어디부터 가볼지 살펴볼 시간이에요.'
+            : '답변할수록 지도 위의 흐릿한 조각이 하나씩 선명해져요.'}
         </p>
         {isReadyForResult && (
           <button className="primary-button full survey-result-button" onClick={showResult}>
@@ -114,7 +110,7 @@ export default function SurveyScreen({ onComplete, onBack }) {
             const pieceColumn = pieceIndex % 4;
             const pieceRow = Math.floor(pieceIndex / 4);
             const isUnlocked = pieceIndex < restoredPieceCount;
-            const isCurrent = pieceIndex === restoredPieceCount - 1 && isRestoringCurrentPiece;
+            const isCurrent = pieceIndex === recentRestoredPieceIndex;
 
             return (
               <div

@@ -1,4 +1,4 @@
-import { TreasureChestIllustration } from '../components/Illustrations.jsx';
+import { HobbyMapIllustration, TreasureChestIllustration } from '../components/Illustrations.jsx';
 
 export default function AddHobbyScreen({ onSearch, onSurvey, onBack }) {
   return (
@@ -8,7 +8,7 @@ export default function AddHobbyScreen({ onSearch, onSurvey, onBack }) {
         <div>
           <span className="eyebrow">새로운 가능성</span>
           <h1>새로운 가능성을 열어볼까요?</h1>
-          <p>직접 검색해서 시작하거나, 내면 나침반으로 지금의 나에게 어울리는 길을 찾아보세요.</p>
+          <p>직접 검색해서 시작하거나, 내면 지도를 다시 복원해 지금 가볼 만한 지점을 확인해보세요.</p>
         </div>
         <TreasureChestIllustration />
       </section>
@@ -19,9 +19,11 @@ export default function AddHobbyScreen({ onSearch, onSurvey, onBack }) {
           <p>이미 마음에 둔 활동이 있다면 바로 퀘스트로 추가해보세요.</p>
         </button>
         <button className="card add-option" onClick={onSurvey}>
-          <span>🧭</span>
-          <h2>내면 나침반으로 찾기</h2>
-          <p>다시 질문에 답하고 지금의 나에게 어울리는 길을 찾아보세요.</p>
+          <div className="add-option-illustration">
+            <HobbyMapIllustration />
+          </div>
+          <h2>내면 지도 다시 복원하기</h2>
+          <p>다시 질문에 답하고 지금의 나에게 표시되는 지점을 확인해보세요.</p>
         </button>
       </div>
     </main>

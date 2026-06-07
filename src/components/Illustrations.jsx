@@ -1,6 +1,5 @@
 import sproutAdventurerMaleImage from '../assets/sub-character-images/sprout-adventurer-male.png';
 import sproutAdventurerFemaleImage from '../assets/sub-character-images/sprout-adventurer-female.png';
-import compassImage from '../../나침반.png';
 import hobbyMapImage from '../../지도.png';
 import treasureChestImage from '../../보물상자.png';
 
@@ -28,14 +27,6 @@ export function SproutAdventurerSelection({ gender }) {
       <div className={`sprout-adventurer-frame${gender === '여성' ? ' selected' : ''}`}>
         <img className="sprout-adventurer-option" src={sproutAdventurerFemaleImage} alt="" />
       </div>
-    </div>
-  );
-}
-
-export function CompassIllustration() {
-  return (
-    <div className="illustration compass" aria-hidden="true">
-      <img className="compass-image" src={compassImage} alt="" />
     </div>
   );
 }
