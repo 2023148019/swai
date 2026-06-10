@@ -23,7 +23,7 @@ const REGION_OPTIONS = [
 
 export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdventure, onContinue, onStart }) {
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ name: '', gender: '', age: '', locations: [] });
+  const [form, setForm] = useState({ nickname: '', gender: '', age: '', locations: [] });
   const [locationOpen, setLocationOpen] = useState(false);
 
   const handleChange = (event) => {
@@ -46,16 +46,19 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
 
   const startNew = () => {
     onPrepareNewAdventure();
-    setForm({ name: '', gender: '', age: '', locations: [] });
+    setForm({ nickname: '', gender: '', age: '', locations: [] });
     setLocationOpen(false);
     setShowForm(true);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!form.name.trim() || !form.age.trim() || form.locations.length === 0) return;
+    const nickname = form.nickname.trim();
+    if (!nickname || !form.age.trim() || form.locations.length === 0) return;
     onStart({
       ...form,
+      name: nickname,
+      nickname,
       location: form.locations.join(', ')
     });
   };
@@ -65,7 +68,7 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
       <section className="hero-card card">
         <div className="hero-copy">
           <span className="eyebrow">아직 만나지 못한 나를 찾아서</span>
-          <h1>나를 찾아보세요!</h1>
+          <h1>Inner Adventure</h1>
           <p>
             짧은 질문에 답하면 지금의 나에게 어울리는 첫 번째 퀘스트를 찾아드려요.
             운동, 창작, 음악, 요리 같은 취미 활동을 통해 나에게 맞는 가능성을 가볍게 실험해볼 수 있어요.
@@ -85,8 +88,8 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
             <h2>모험가 등록</h2>
             <div className="info-form-grid">
               <label className="wide-field">
-                이름
-                <input name="name" value={form.name} onChange={handleChange} placeholder="예: 홍길동" />
+                닉네임
+                <input name="nickname" value={form.nickname} onChange={handleChange} placeholder="예: 취미탐험가" />
               </label>
               <label>
                 성별

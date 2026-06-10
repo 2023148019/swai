@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { generateMissionLink } from '../utils/aiLink.js';
 
 const missionHelperText = {
@@ -16,9 +16,13 @@ export default function MissionCard({ mission, hobby, userInfo, evidence = {}, i
   const link = String(evidence.link || '');
   const memo = String(evidence.memo || '');
   const hasEvidence = link.trim().length > 0 || memo.trim().length > 0;
-  const [aiLink, setAiLink] = useState(null);
+  const [aiGuide, setAiGuide] = useState(evidence.aiGuide || null);
   const [aiStatus, setAiStatus] = useState('idle');
   const [aiError, setAiError] = useState('');
+
+  useEffect(() => {
+    setAiGuide(evidence.aiGuide || null);
+  }, [evidence.aiGuide]);
 
   const updateEvidence = (field, value) => {
     onEvidenceChange?.(mission.id, { [field]: value });
@@ -29,7 +33,7 @@ export default function MissionCard({ mission, hobby, userInfo, evidence = {}, i
 
     setAiStatus('loading');
     setAiError('');
-    setAiLink(null);
+    setAiGuide(null);
 
     try {
       const result = await generateMissionLink({
@@ -42,14 +46,15 @@ export default function MissionCard({ mission, hobby, userInfo, evidence = {}, i
         energy: hobby.timeLevel || ''
       });
 
-      if (!result.success || !result.link?.url) {
+      if (!result.success || !result.guide?.answer) {
         throw new Error(result.message || 'AI link failed');
       }
 
-      setAiLink(result.link);
+      setAiGuide(result.guide);
+      updateEvidence('aiGuide', result.guide);
       setAiStatus('success');
     } catch (error) {
-      setAiError(error.message || 'AI 길잡이가 바로 사용할 수 있는 링크를 찾지 못했어요. 다시 한 번 시도해 주세요.');
+      setAiError(error.message || 'AI 미션 도우미가 바로 사용할 수 있는 가이드를 만들지 못했어요. 다시 한 번 시도해 주세요.');
       setAiStatus('error');
     }
   };
@@ -87,25 +92,45 @@ export default function MissionCard({ mission, hobby, userInfo, evidence = {}, i
               onClick={handleGenerateLink}
               disabled={disabled || aiStatus === 'loading'}
             >
-              {aiStatus === 'loading' ? 'AI 링크 찾는 중...' : 'AI 링크 생성'}
+              {aiStatus === 'loading' ? 'AI 가이드 만드는 중...' : 'AI 미션 가이드'}
             </button>
             {aiStatus === 'loading' ? (
-              <p className="mission-evidence-helper">AI 길잡이가 실제 링크를 찾는 중입니다...</p>
+              <p className="mission-evidence-helper">AI 미션 도우미가 지금 할 일과 참고 링크를 찾는 중입니다...</p>
             ) : null}
             {aiError ? <p className="ai-link-error">{aiError}</p> : null}
-            {aiLink ? (
+            {aiGuide ? (
               <div className="ai-link-card">
                 <div>
-                  <span className="soft-pill">{aiLink.platform || 'web'}</span>
-                  <h5>{aiLink.title}</h5>
-                  <p>{aiLink.reason}</p>
+                  <span className="soft-pill">AI 미션 도우미</span>
+                  <h5>{aiGuide.answer}</h5>
                 </div>
-                <div className="button-row">
-                  <a className="secondary-button ai-link-anchor" href={aiLink.url} target="_blank" rel="noreferrer">링크 열기</a>
-                  <button className="primary-button" type="button" onClick={() => updateEvidence('link', aiLink.url)}>
-                    이 링크 저장하기
-                  </button>
+                <div className="ai-guide-section">
+                  <strong>실행 단계</strong>
+                  <ol>
+                    {(aiGuide.steps || []).map((step) => <li key={step}>{step}</li>)}
+                  </ol>
                 </div>
+                <div className="ai-guide-section">
+                  <strong>초보자 팁</strong>
+                  <ul>
+                    {(aiGuide.tips || []).map((tip) => <li key={tip}>{tip}</li>)}
+                  </ul>
+                </div>
+                {(aiGuide.candidates || []).map((candidate) => (
+                  <div className="ai-candidate-row" key={candidate.url}>
+                    <div>
+                      <span className="soft-pill">{candidate.platform || 'web'}</span>
+                      <h5>{candidate.title}</h5>
+                      <p>{candidate.reason}</p>
+                    </div>
+                    <div className="button-row">
+                      <a className="secondary-button ai-link-anchor" href={candidate.url} target="_blank" rel="noreferrer">링크 열기</a>
+                      <button className="primary-button" type="button" onClick={() => updateEvidence('link', candidate.url)}>
+                        저장
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : null}
           </div>

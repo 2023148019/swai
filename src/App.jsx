@@ -16,6 +16,8 @@ import { defaultTraits } from './data/questions.js';
 import { buildRecommendations, applyFeedbackToTraits } from './utils/recommendation.js';
 import { clearState, createInitialState, hasSavedState, loadState, saveState } from './utils/storage.js';
 import { addAchievement, addTraits, baseAchievements, getHobbyProgress, getProfile, getTraitBoostFromHobby } from './utils/progress.js';
+import { getSubCharacter } from './utils/character.js';
+import { saveAddedQuest, saveSurveyResponse, saveTraits, saveVisitor } from './utils/sheets.js';
 
 function makeInstance(hobbyId) {
   return {
@@ -88,6 +90,10 @@ export default function App() {
     setSavedAdventureExists(true);
   }, [appState, profile, stats, sessionActive]);
 
+  useEffect(() => {
+    saveVisitor();
+  }, []);
+
   const selectedActiveHobby = appState.activeHobbies.find((item) => item.instanceId === selectedInstanceId);
   const removeTarget = appState.activeHobbies.find((item) => item.instanceId === removeTargetId);
   const removeTargetHobby = removeTarget ? hobbyMap[removeTarget.hobbyId] : null;
@@ -155,6 +161,10 @@ export default function App() {
       completedHobbies: appState.completedHobbies,
       feedbacks: appState.feedbacks
     });
+    const subCharacter = getSubCharacter(result.mergedTraits);
+
+    saveSurveyResponse(appState.userInfo, answers);
+    saveTraits(result.mergedTraits, subCharacter.name);
 
     updateState((prev) => {
       const isRepeatSurvey = prev.surveyHistory.length > 0;
@@ -189,12 +199,20 @@ export default function App() {
   };
 
   const addHobby = (hobby) => {
+    const isAlreadyTracked = appState.activeHobbies.some((item) => item.hobbyId === hobby.id) ||
+      appState.completedHobbies.some((item) => item.hobbyId === hobby.id);
+    const quest = makeInstance(hobby.id);
+
+    if (!isAlreadyTracked) {
+      saveAddedQuest(quest, hobby);
+    }
+
     updateState((prev) => {
       if (
         prev.activeHobbies.some((item) => item.hobbyId === hobby.id) ||
         prev.completedHobbies.some((item) => item.hobbyId === hobby.id)
       ) return prev;
-      const nextActive = [...prev.activeHobbies, makeInstance(hobby.id)];
+      const nextActive = [...prev.activeHobbies, quest];
       let nextAchievements = addAchievement(prev.achievements, baseAchievements.find((item) => item.id === 'first_step'));
       if (nextActive.length + prev.completedHobbies.length >= 3) {
         nextAchievements = addAchievement(nextAchievements, baseAchievements.find((item) => item.id === 'collector_3'));
@@ -341,6 +359,8 @@ export default function App() {
       const nextEvidence = {
         ...(active.missionEvidence || {}),
         [missionId]: {
+          ...current,
+          ...nextValue,
           link: normalizeEvidenceLink(nextValue?.link ?? current.link ?? ''),
           memo: String(nextValue?.memo ?? current.memo ?? ''),
           updatedAt: new Date().toISOString()

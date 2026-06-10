@@ -152,132 +152,6 @@ export const surveyQuestions = [
     ]
   },
   {
-    id: 'q5',
-    title: '실내와 야외 중 어디가 더 좋아요?',
-    subtitle: '햇빛과 에어컨 사이의 운명적 선택.',
-    options: [
-      {
-        optionId: 'indoor',
-        label: '실내가 좋아요',
-        categoryEffects: { '공예': 6, '악기': 6, '미술/드로잉': 6, '피트니스': 5, '요리/조리': 5, '취미/생활': 5 },
-        traitEffects: { indoor: 3 },
-        tagEffects: { '실내': 5 }
-      },
-      {
-        optionId: 'outdoor',
-        label: '야외에서 하는 게 좋아요',
-        categoryEffects: { '스포츠': 8, '계절 스포츠': 8, '사진/영상': 5, '구기 스포츠': 5, '기타 취미/자기계발': 2 },
-        traitEffects: { outdoor: 3, activity: 1 },
-        tagEffects: { '야외': 5, '활동적': 2 }
-      },
-      {
-        optionId: 'access',
-        label: '장소보다 접근성이 중요해요',
-        categoryEffects: { '구기 스포츠': 5, '피트니스': 5, '사진/영상': 4, '취미/생활': 6, '공예': 4 },
-        traitEffects: { costSensitive: 1, routine: 1 },
-        tagEffects: { '실속형': 2, '루틴': 2, '짧음': 2 }
-      }
-    ]
-  },
-  {
-    id: 'q6',
-    title: '취미에서 원하는 감정은?',
-    subtitle: '이거 은근 핵심입니다. 취미의 맛을 고르는 느낌.',
-    options: [
-      {
-        optionId: 'stress',
-        label: '스트레스가 확 풀렸으면 좋겠어요',
-        categoryEffects: { '격투 스포츠': 8, '피트니스': 7, '구기 스포츠': 6, '댄스': 5, '스포츠': 5 },
-        traitEffects: { activity: 2, challenge: 1 },
-        tagEffects: { '활동적': 4, '도전': 3, '운동': 3 }
-      },
-      {
-        optionId: 'heal',
-        label: '마음이 차분해졌으면 좋겠어요',
-        categoryEffects: { '공예': 8, '취미/생활': 8, '국악': 5, '미술/드로잉': 6, '피트니스': 4 },
-        traitEffects: { focus: 3, routine: 1 },
-        tagEffects: { '정적': 4, '몰입': 4, '루틴': 1 }
-      },
-      {
-        optionId: 'proud',
-        label: '내가 성장했다는 느낌이 좋아요',
-        categoryEffects: { '악기': 8, '피트니스': 7, '구기 스포츠': 6, '취업 준비 컨설팅': 6, '댄스': 4 },
-        traitEffects: { routine: 3, challenge: 2 },
-        tagEffects: { '성장감': 5, '루틴': 3, '도전': 2 }
-      },
-      {
-        optionId: 'express',
-        label: '나를 표현하고 싶어요',
-        categoryEffects: { '댄스': 8, '음악이론/보컬': 8, '연기/마술': 8, '패션/미용': 6, '사진/영상': 5 },
-        traitEffects: { expression: 3, creativity: 2 },
-        tagEffects: { '표현': 5, '창작': 3, '함께': 1 }
-      }
-    ]
-  },
-  {
-    id: 'q7',
-    title: '새로운 걸 배울 때 나는 보통?',
-    subtitle: '고난이도 보스전에 강한 타입인지 봅니다.',
-    options: [
-      {
-        optionId: 'challenge',
-        label: '어려워도 도전하는 게 재밌어요',
-        categoryEffects: { '격투 스포츠': 8, '계절 스포츠': 7, '스포츠': 6, '악기': 5, '구기 스포츠': 5 },
-        traitEffects: { challenge: 3, routine: 1 },
-        tagEffects: { '도전': 5, '난이도': 3, '성장감': 2 }
-      },
-      {
-        optionId: 'safe',
-        label: '쉬운 것부터 천천히 시작하고 싶어요',
-        categoryEffects: { '취미/생활': 8, '공예': 7, '요리/조리': 6, '미술/드로잉': 6, '패션/미용': 4 },
-        traitEffects: { challenge: -1, routine: 1 },
-        tagEffects: { '쉬움': 5, '실내': 2 }
-      },
-      {
-        optionId: 'guide',
-        label: '누가 옆에서 알려주면 잘 따라가요',
-        categoryEffects: { '피트니스': 6, '댄스': 6, '구기 스포츠': 6, '취업 준비 컨설팅': 6, '음악이론/보컬': 4 },
-        traitEffects: { social: 2, routine: 1 },
-        tagEffects: { '함께': 3, '성장감': 3, '커뮤니티': 2 }
-      }
-    ]
-  },
-  {
-    id: 'q8',
-    title: '관심 있는 분위기에 가까운 것은?',
-    subtitle: '이제 지도 위의 흐릿한 구역을 꽤 좁혀봅니다.',
-    options: [
-      {
-        optionId: 'art',
-        label: '그림, 디자인, 만들기 같은 창작 분위기',
-        categoryEffects: { '미술/드로잉': 9, '공예': 9, '사진/영상': 5, '패션/미용': 3 },
-        traitEffects: { creativity: 3, focus: 1 },
-        tagEffects: { '창작': 5, '결과물': 4, '몰입': 1 }
-      },
-      {
-        optionId: 'music',
-        label: '음악, 노래, 연주 같은 표현 분위기',
-        categoryEffects: { '악기': 9, '음악이론/보컬': 9, '국악': 7, '연기/마술': 3 },
-        traitEffects: { expression: 3, routine: 1 },
-        tagEffects: { '표현': 5, '몰입': 2, '성장감': 2 }
-      },
-      {
-        optionId: 'sport',
-        label: '운동, 승부, 체력 같은 활동 분위기',
-        categoryEffects: { '구기 스포츠': 9, '피트니스': 8, '스포츠': 8, '격투 스포츠': 7, '댄스': 4 },
-        traitEffects: { activity: 3, challenge: 1 },
-        tagEffects: { '활동적': 5, '경쟁': 4, '운동': 3 }
-      },
-      {
-        optionId: 'life',
-        label: '생활, 자기관리, 실용적인 성장 분위기',
-        categoryEffects: { '취미/생활': 8, '요리/조리': 7, '패션/미용': 6, '투자/N잡': 6, '취업 준비 컨설팅': 6 },
-        traitEffects: { routine: 2, costSensitive: 1 },
-        tagEffects: { '루틴': 4, '실속형': 3, '기록': 2 }
-      }
-    ]
-  },
-  {
     id: 'q9',
     title: '취미에 쓸 수 있는 시간은 어느 정도인가요?',
     subtitle: '욕심은 취미 생활 완성, 현실은 과제 제출 23:59일 수 있으니까요.',
@@ -971,7 +845,7 @@ export function getAdaptiveSurveyQuestions(answers = []) {
   if (answers.length < 4) return surveyQuestions;
 
   const openingQuestions = surveyQuestions.slice(0, 4);
-  const closingQuestions = surveyQuestions.slice(8, 10);
+  const closingQuestions = surveyQuestions.slice(4, 6);
   const adaptiveSets = pickAdaptiveSets(answers.slice(0, 4))
     .flatMap((track) => adaptiveQuestionSets[track].slice(0, 3));
 

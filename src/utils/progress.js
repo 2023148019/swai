@@ -89,7 +89,7 @@ export function getProfile(userInfo, userTraits, userStats) {
   const titleInfo = getTitleInfo(userStats.totalScore);
   const topTraits = getTopTraits(userTraits);
   return {
-    name: userInfo?.name || '모험가',
+    name: userInfo?.nickname || userInfo?.name || '모험가',
     gender: userInfo?.gender || '',
     ...titleInfo,
     topTraits
