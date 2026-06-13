@@ -67,7 +67,7 @@ export default function StartAndInfoScreen({ hasSavedAdventure, onPrepareNewAdve
     <main className="screen start-screen desktop-hero-layout">
       <section className="hero-card card">
         <div className="hero-copy">
-          <span className="eyebrow">아직 만나지 못한 나를 찾아서</span>
+          <span className="eyebrow">빈 시간을 즐거운 여정으로</span>
           <h1>Inner Adventure</h1>
           <p>
             짧은 질문에 답하면 지금의 나에게 어울리는 첫 번째 퀘스트를 찾아드려요.

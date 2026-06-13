@@ -449,6 +449,13 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <div className="rotate-device-overlay" role="status" aria-live="polite">
+        <div className="rotate-device-card">
+          <span className="rotate-device-icon" aria-hidden="true">↻</span>
+          <h2>가로로 돌려서 플레이해주세요</h2>
+          <p>Hobby Quest는 휴대폰을 가로로 들었을 때 작은 게임 화면처럼 더 편하게 즐길 수 있어요.</p>
+        </div>
+      </div>
       <header className="app-header">
         <button className="brand" onClick={goHomeOrStart}>
           <span>IA</span> Inner Adventure

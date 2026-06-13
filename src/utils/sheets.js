@@ -102,27 +102,36 @@ function getUtmValue() {
   return urlParams.get('utm') || '';
 }
 
-async function getClientIp() {
-  if (window.__clientIp) return window.__clientIp;
-
+async function fetchClientIp() {
   try {
-    const response = await fetch('https://jsonip.com');
+    const response = await fetch('https://api.ipify.org?format=json');
     const data = await response.json();
-    window.__clientIp = data?.ip || 'unknown';
-  } catch {
-    window.__clientIp = 'unknown';
+    return data.ip || 'unknown';
+  } catch (error) {
+    console.warn('IP 조회 실패:', error);
+    return 'unknown';
   }
-
-  return window.__clientIp;
 }
 
 export async function saveVisitor() {
-  const ip = await getClientIp();
+  const key = 'visitor_log_saved';
+
+  try {
+    if (sessionStorage.getItem(key) === 'true') {
+      return Promise.resolve();
+    }
+    sessionStorage.setItem(key, 'true');
+  } catch {
+    // sessionStorage를 사용할 수 없는 환경에서는 IP 조회 후 저장을 계속 시도합니다.
+  }
+
+  const ip = await fetchClientIp();
+
   return saveToSheet('visitors', {
     id: getUVfromCookie(),
     landingUrl: window.location.href,
-    ip: ip || 'unknown',
-    referer: document.referrer,
+    ip,
+    referer: document.referrer || '',
     time_stamp: getTimeStamp(),
     utm: getUtmValue(),
     device: getDeviceType()

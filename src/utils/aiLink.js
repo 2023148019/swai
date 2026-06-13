@@ -33,15 +33,18 @@ export async function generateMissionLink(payload) {
     });
 
     let data = {};
+    let rawText = '';
 
     try {
-      data = await response.json();
+      rawText = await response.text();
+      data = rawText ? JSON.parse(rawText) : {};
     } catch (error) {
-      console.error('Failed to read Gemini function response:', error);
+      console.error('Failed to read Gemini function response:', error, rawText);
     }
 
     if (!response.ok) {
-      throw new Error(data.error || 'AI link request failed');
+      const details = data.error || rawText.slice(0, 160) || response.statusText || 'Unknown error';
+      throw new Error(`AI link request failed (${response.status}): ${details}`);
     }
 
     const guide = parseGuide(data.result);

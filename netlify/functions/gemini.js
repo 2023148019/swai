@@ -56,12 +56,21 @@ function buildPrompt(payload) {
 function jsonResponse(statusCode, body) {
   return {
     statusCode,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    },
     body: JSON.stringify(body),
   };
 }
 
-exports.handler = async function (event) {
+export async function handler(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return jsonResponse(204, {});
+  }
+
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, { error: 'Method not allowed' });
   }
@@ -102,4 +111,4 @@ exports.handler = async function (event) {
     console.error('Gemini function error:', error);
     return jsonResponse(500, { error: 'Gemini function failed' });
   }
-};
+}
