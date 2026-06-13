@@ -16,7 +16,7 @@ function parseGuide(resultText) {
   } catch (error) {
     console.error('Failed to parse Gemini response:', error);
     return {
-      answer: cleaned || 'AI 미션 가이드를 불러오지 못했어요. 잠시 후 다시 시도해주세요.',
+      answer: cleaned || 'AI 미션 가이드를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.',
       steps: [],
       tips: [],
       candidates: []
